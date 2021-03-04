@@ -1,0 +1,98 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row  pr-2 mt-2 ">
+            <div class="col-md-4">
+              <form>
+                <div class="mb-2">
+                  <input type="text" class="form-control" id="prenametext" placeholder="Search">
+                </div>
+              </form>
+            </div>
+            <div class="col-md-8 mb-2 text-right">
+              <a routerLink="/pages/notification" class="btn btn-primary text-white mr-2 ">Back</a>
+              <div ngbDropdown placement="top" class="d-inline-block">
+                <button class="btn btn-outline-primary " id="dropdownBasic1" ngbDropdownToggle>
+                  All
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button class="dropdown-item" > All </button>
+                  <button class="dropdown-item" > Vendor </button>
+                  <button class="dropdown-item" > Orginzer </button>
+                  <button class="dropdown-item" >User</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th class="text-nowrap">#</th>
+                    <th class="text-nowrap">Vendor Name</th>
+                    <th class="text-nowrap">Vendor ID</th>
+                    <th class="text-nowrap">User Name</th>
+                    <th>User ID</th>
+                    <th>Orginzer</th>
+                    <th class="text-nowrap">Orgnizer ID</th>
+                    <th>Massege</th>                    
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Sonu</td>
+                    <td>Sonu656</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>Lorem ipsum dummy content It is useful for all type site and use for dummy content all type site and
+                        use for dummy content all type site and use for dummy content..... <a href="javascript:void(0)"
+                          (click)="reviewModal(review)">Read More</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>Sam</td>
+                    <td>Sam3435</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>Lorem ipsum dummy content It is useful for all type site and use for dummy content all type site and
+                        use for dummy content all type site and use for dummy content..... <a href="javascript:void(0)"
+                          (click)="reviewModal(review)">Read More</a></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- view modal -->
+<ng-template #review let-modal>
+    <div class="modal-body">
+      <button type="button" class=" close-icon" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <i class="mdi mdi-close"></i>
+      </button>
+      <div class="row">
+  
+        <!-- Column -->
+        <div class="col-lg-12 col-xlg-12 col-md-12">
+          <div class="card custom-tabs mb-0">
+            <div class="card-body">
+              <div class="row pt-2">
+                <div class="col-md-12">
+                  <p>
+                    It is a long established fact that a reader will be distracted by the readable content of a page when
+                    looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                    distribution of letters, as opposed to using 'Content here, content here', making it look like
+                    readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their
+                    default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Column -->
+      </div>
+    </div>
+  </ng-template>
+  <!-- add review -->

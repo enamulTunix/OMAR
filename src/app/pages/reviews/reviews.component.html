@@ -12,9 +12,18 @@
             </form>
           </div>
           <div class="col-md-8 text-right">
+            <div ngbDropdown class="d-inline-block mr-2">
+              <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>All</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem class="text-primary">All </button>
+                <button ngbDropdownItem class="text-primary">Vendors</button>
+                <button ngbDropdownItem class="text-primary">Customer</button>              
+            </div>
+            </div>
             <div ngbDropdown class="d-inline-block">
               <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Rating</button>
               <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem class="text-warning"><i class="fas fa-star"></i> </button>
                 <button ngbDropdownItem class="text-warning"><i class="fas fa-star"></i> <i class="fas fa-star"></i></button>
                 <button ngbDropdownItem class="text-warning"><i class="fas fa-star"></i> <i class="fas fa-star"></i><i class="fas fa-star"></i> </button>
                 <button ngbDropdownItem class="text-warning"><i class="fas fa-star"></i> <i class="fas fa-star"></i><i class="fas fa-star"></i> <i class="fas fa-star"></i></button>
@@ -22,25 +31,28 @@
               </div>
             </div>
           </div>
+          <div class="table-responsive">
           <table class="table v-middle product-overview" id="zero_config">
             <thead>
               <tr>               
-                <th>Order ID</th>
+                <th>No</th>
+                <th>Order No</th>
                 <th>Vendor Name</th>
                 <th>Vendor Id</th>
                 <th>User Name</th>
                 <th>User Id</th>               
-                <th>Rating</th>
+                <th>Vendor Rating</th>
+                <th class="text-nowrap">Customer Rating</th>
                 <th>Review</th>
-                <th>Review status</th>
+                <th class="text-nowrap">Review status</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <!-- <td>
-                  <img src="assets/images/users/2.jpg" alt="iMac" width="60" class="rounded-circle">
-                </td> -->
+                <td>
+                 1
+                </td>
                 <td>#667676 </td>
                 <td>Ronny </td>
                 <td>Ron33434 </td>
@@ -50,7 +62,11 @@
                   <p class="text-warning mb-0 text-nowrap"> <i class="fas fa-star "> </i> <i class="fas fa-star"> </i>
                     <i class="fas fa-star"> </i> <i class="fas fa-star"> </i> </p>
                 </td>
-                <td>Lorem ipsum dummy content It is useful for all type site and use for dummy content all type site and
+                <td>
+                  <p class="text-warning mb-0 text-nowrap"> <i class="fas fa-star "> </i> <i class="fas fa-star"> </i>
+                    <i class="fas fa-star"> </i> </p>
+                </td>
+                <td class="d-block" style="width:200px">Lorem ipsum dummy content It is useful for all type site and use for dummy content all type site and
                   use for dummy content all type site and use for dummy content..... <a href="javascript:void(0)"
                     (click)="reviewModal(review)">Read More</a></td>
                     <td>
@@ -71,9 +87,9 @@
                 </td>
               </tr>
               <tr>
-                <!-- <td>
-                  <img src="assets/images/users/2.jpg" alt="iMac" width="60" class="rounded-circle">
-                </td> -->
+                <td>
+                 2
+                </td>
                 <td>#667676 </td>
                 <td>Ronny </td>
                 <td>Ron33434 </td>
@@ -84,6 +100,11 @@
                   <p class="text-warning mb-0 text-nowrap"> <i class="fas fa-star "> </i> <i class="fas fa-star"> </i>
                     <i class="fas fa-star"> </i> <i class="fas fa-star"> </i> </p>
                 </td>
+                <td>
+                  <p class="text-warning mb-0 text-nowrap"> <i class="fas fa-star "> </i> <i class="fas fa-star"> </i>
+                    <i class="fas fa-star"> </i> <i class="fas fa-star"> </i> </p>
+                </td>
+               
                 <td>Lorem ipsum dummy content It is useful for all type site and use for dummy content all type site and
                   use for dummy content all type site and use for dummy content..... <a href="javascript:void(0)"
                     (click)="reviewModal(review)">Read More</a></td>
@@ -105,14 +126,18 @@
                 </td>
               </tr>
               <tr>
-                <!-- <td>
-                  <img src="assets/images/users/2.jpg" alt="iMac" width="60" class="rounded-circle">
-                </td> -->
+                <td>
+                  3
+                </td>
                 <td>#667676 </td>
                 <td>Ronny </td>
                 <td>Ron33434 </td>
                 <td>Sam </td>
                 <td>Sam33434 </td>               
+                <td>
+                  <p class="text-warning mb-0 text-nowrap"> <i class="fas fa-star "> </i> <i class="fas fa-star"> </i>
+                    <i class="fas fa-star"> </i> <i class="fas fa-star"> </i> </p>
+                </td>
                 <td>
                   <p class="text-warning mb-0 text-nowrap"> <i class="fas fa-star "> </i> <i class="fas fa-star"> </i>
                     <i class="fas fa-star"> </i> <i class="fas fa-star"> </i> </p>
@@ -140,6 +165,7 @@
               </tr>
             </tbody>
           </table>
+        </div>
         </div>
       </div>
     </div>

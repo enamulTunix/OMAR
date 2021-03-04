@@ -3,6 +3,7 @@ import * as Chartist from 'chartist';
 import { ChartType, ChartEvent } from 'ng-chartist';
 import * as c3 from 'c3';
 import {NgbDateStruct,NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDate, NgbCalendar, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 
 
 export interface Chart {
@@ -19,7 +20,14 @@ export interface Chart {
 })
 export class RevenueManagementComponent implements OnInit {
   model: NgbDateStruct;
-  constructor(private modalService: NgbModal) {}
+  hoveredDate: NgbDate | null = null;
+
+  fromDate: NgbDate | null;
+  toDate: NgbDate | null;
+  constructor(private modalService: NgbModal, private calendar: NgbCalendar, public formatter: NgbDateParserFormatter) {
+    this.fromDate = calendar.getToday();
+    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+  }
 
   ngOnInit(): void {
   }
@@ -304,5 +312,32 @@ public lineChartColors: Array<any> = [
 ];
 openWindowCustomClass(content3) {
   this.modalService.open(content3, {backdropClass: 'light-blue-backdrop',centered: true,size: 'lg'});
+}
+onDateSelection(date: NgbDate) {
+  if (!this.fromDate && !this.toDate) {
+    this.fromDate = date;
+  } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
+    this.toDate = date;
+  } else {
+    this.toDate = null;
+    this.fromDate = date;
+  }
+}
+
+isHovered(date: NgbDate) {
+  return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+}
+
+isInside(date: NgbDate) {
+  return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
+}
+
+isRange(date: NgbDate) {
+  return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
+}
+
+validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
+  const parsed = this.formatter.parse(input);
+  return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
 }
 }

@@ -4,35 +4,28 @@
     <div class="row">
       <div class="col-md-6">
         <form class="form-horizontal form-material">
-            <div class="form-group">
-              <div ngbDropdown placement="bottom" class="d-inline-block mb-3">
-                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
-                  All Bike
-                </button>
-          
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button class="dropdown-item"> All Bikes
-                  </button>
-                  <button class="dropdown-item"> All Users </button>
-                  <button class="dropdown-item"> All Vendors </button>
-                  <button class="dropdown-item"> All Organizer </button>
-                  <button class="dropdown-item"> Vendor </button>
-                  <button class="dropdown-item"> User </button>
-                  <button class="dropdown-item"> Organizer </button>
-                </div>
-              </div>
+            <div class="form-group mb-3 d-flex">
+              <mat-form-field >
+                <mat-label>Notification</mat-label>
+                <mat-select [formControl]="toppings" multiple>
+                  <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                </mat-select> 
+              </mat-form-field>
+              <div class="ml-auto"><a routerLink="/pages/notificationhistory" class=" btn btn-primary ">View Notification History</a></div>
             </div>
+          
+           
          
             <div class="col-md-12">
               <div class="form-group">
               <label>Add ID</label>
-              <input type="text" placeholder="" class="form-control form-control-line" placeholder="Add Heading">
+              <input type="text" placeholder="" class="form-control form-control-line" placeholder="Add Specifc ID">
             </div>
             </div>
             <div class="col-md-12">
               <div class="form-group">
-              <label>Add Email</label>
-              <input type="text" placeholder="" class="form-control form-control-line" placeholder="Add Heading">
+              <label>Add Name</label>
+              <input type="text" placeholder="" class="form-control form-control-line" placeholder="Add Specifc Name">
             </div>
           </div>
             <div class="col-md-12">
@@ -46,13 +39,22 @@
               <label>Add Content</label>
               <textarea class="form-control" rows="5" placeholder="Add Content"></textarea>
             </div>
+            <div class="form-group">
+              <label>Date</label>
+              <input type="date" placeholder="" class="form-control form-control-line" placeholder="Date">
+            </div>
+            <div class="form-group">
+              <label>Time</label>
+              <input type="time" placeholder="" class="form-control form-control-line" placeholder="Time">
+            </div>
             <button type="submit" class="btn btn-success">
               <i class="fa fa-check"></i> Send</button>
 
           </div>
         </form>
+        
       </div>
-      <div class="col-md-6">
+      <!-- <div class="col-md-6">
         <div ngbDropdown placement="bottom" class="d-inline-block mb-3">
             <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
               Notifications
@@ -103,7 +105,7 @@
 
           </div>
         </form>
-      </div>
+      </div> -->
     </div>
 
 

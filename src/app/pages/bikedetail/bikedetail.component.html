@@ -1,0 +1,256 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row  pr-2 mt-2 ">
+            <div class="col-md-4">
+              <form>
+                <div class="mb-2">
+                  <input type="text" class="form-control" id="prenametext" placeholder="Search">
+                </div>
+              </form>
+            </div>
+            <div class="col-md-8 mb-2 text-right">
+              <a routerLink="/pages/bikes" class="btn btn-primary text-white mr-2 mb-2">Back</a>
+            </div>
+          </div>
+ 
+<div class="table-responsive">
+    <table class="table">
+      <tr>
+        <th>Bike Name</th>
+        <th>Bike No</th>
+      
+        <th>Vendor Name</th>
+        <th>Vendor ID</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Contact</th>
+        <th>Email</th>
+        
+        <th>Action</th>
+      </tr>
+    
+      <tr>
+        <td>Pulsar</td>
+        <td class="text-nowrap">HR-05-V-3244</td>        
+        <td>John</td>
+        <td>Joh432</td>
+        <td  class="text-nowrap">16-02/2021/11:30 PM</td>
+        <td  class="text-nowrap">16-02/2021/11:30 PM</td>
+        <td class="text-nowrap">+91-321324567</td>
+        <td>example@gmail.com</td>       
+        <td>
+            <div ngbDropdown placement="top" class="d-inline-block">
+              <button class="btn btn-outline-primary " id="dropdownBasic1" ngbDropdownToggle>
+                Action
+              </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <!-- <button class="dropdown-item" (click)="userprofileModal(userprofile)"><i class="ti-eye"></i> View </button> -->
+                <button class="dropdown-item" (click)="userDetailModal(userDetail)"><i
+                    _ngcontent-axh-c146="" class="ti-marker-alt"></i> Edit</button>
+
+                <button class="dropdown-item" (click)="userDeleteModal(userDelete)"><i class="ti-trash"></i>
+                  Delete</button>
+              </div>
+            </div>
+
+          </td>
+
+      </tr>
+      <tr>
+        <td>Pulsar</td>
+        <td class="text-nowrap">HR-05-V-3244</td>        
+        <td>John</td>
+        <td>Joh432</td>
+        <td  class="text-nowrap">16-02/2021/11:30 PM</td>
+        <td  class="text-nowrap">16-02/2021/11:30 PM</td>
+        <td class="text-nowrap">+91-321324567</td>
+        <td>example@gmail.com</td>       
+        <td>
+            <div ngbDropdown placement="top" class="d-inline-block">
+              <button class="btn btn-outline-primary " id="dropdownBasic1" ngbDropdownToggle>
+                Action
+              </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <!-- <button class="dropdown-item" (click)="userprofileModal(userprofile)"><i class="ti-eye"></i> View </button> -->
+                <button class="dropdown-item" (click)="userDetailModal(userDetail)"><i
+                    _ngcontent-axh-c146="" class="ti-marker-alt"></i> Edit</button>
+
+                <button class="dropdown-item" (click)="userDeleteModal(userDelete)"><i class="ti-trash"></i>
+                  Delete</button>
+              </div>
+            </div>
+
+          </td>
+
+      </tr>
+    </table>
+
+</div>
+</div>
+
+<!-- edit user detail -->
+<ng-template #userDetail let-modal>
+    <div class="modal-body">
+      <div class="card mb-0">
+        <form action="#">
+          <div class="form-body">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12 mb-2">
+                  <h3 class="mb-0 p-2 bg-light">Edit Bike</h3>
+                </div>
+              </div>
+              <div class="row ">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Bike Name</label>
+                    <input type="text" id="firstName" class="form-control" placeholder="John doe" value="Plusar 150">
+  
+                  </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                  <div class="form-group has-success">
+                    <label class="control-label">Bike Number</label>
+                    <input type="text" id="firstName" class="form-control" placeholder="John doe" value="HR-03-v-2034">
+  
+                  </div>
+  
+                </div>
+                <!--/span-->
+              </div>
+              <!--/row-->
+              <div class="row ">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Start Date</label>
+                    <input type="date" id="start_date" class="form-control form-control-danger" Value="Date">
+                    <!-- <div class="custom-file"><input  class="custom-file-input" id="inputGroupFile01" type="file"><label  class="custom-file-label" for="inputGroupFile01">Choose file</label></div> -->
+  
+                  </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                  <div class="form-group has-danger">
+                    <label class="control-label">End Date</label>
+                    <input type="date" id="Date" class="form-control form-control-danger" value="Date">
+  
+                  </div>
+                </div>
+                <!--/span-->
+              </div>
+              <!--/row-->
+              <div class="row ">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Vendor Name</label>
+                    <input type="text" id="location" class="form-control form-control-danger" Value="John">
+                    <!-- <div class="custom-file"><input  class="custom-file-input" id="inputGroupFile01" type="file"><label  class="custom-file-label" for="inputGroupFile01">Choose file</label></div> -->
+  
+                  </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Vendor ID</label>
+                      <input type="text" id="location" class="form-control form-control-danger" Value="John4332">
+                      <!-- <div class="custom-file"><input  class="custom-file-input" id="inputGroupFile01" type="file"><label  class="custom-file-label" for="inputGroupFile01">Choose file</label></div> -->
+              
+                    </div>
+                  </div>
+          <!--/span-->
+              </div>
+    <!--/row-->
+    <div class="row ">
+     
+    
+      <div class="col-md-6">
+        <div class="form-group has-danger">
+          <label class="control-label">Start Time</label>
+          <input type="time" id="location" class="form-control form-control-danger" value="Time">
+  
+        </div>
+      </div>
+      <!--/span-->
+      <div class="col-md-6">
+        <div class="form-group has-danger">
+          <label class="control-label">End Time</label>
+          <input type="time" id="location" class="form-control form-control-danger" value="Time">
+  
+        </div>
+      </div>
+      <!--/span-->
+    </div>
+              <!--/row-->
+              <div class="row">
+                <!--/span-->
+                <div class="col-md-6">
+                    <div class="form-group has-danger">
+                  <label>Rent Per Hours</label>
+                  <input type="text" value="$ 10" class="form-control form-control-danger">
+                  </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                    <div class="form-group has-danger">
+                    <label>Extension Rate</label>
+                    <input type="text" value="$ 10" class="form-control form-control-danger" placeholder="Extention Rate">
+                        </div>
+                </div>
+                  <!--/span-->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Time Changed</label>
+                    <input type="text" id="vendor" class="form-control form-control-danger" placeholder="10:00 Am">
+                  </div>
+                </div> -->
+                <!--/span-->
+              </div>
+              <!--/row-->
+              <div class="row">
+                <!--/span-->
+               
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Insurance Price</label>
+                    <input type="text" id="vendor" class="form-control form-control-danger" placeholder="Insurence Price">
+                  </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Delivery Price</label>
+                    <input type="text" id="vendor" class="form-control form-control-danger" placeholder="Delivery Price">
+                  </div>
+                </div>
+                <!--/span-->
+              </div>
+              <!--/row-->
+            </div>
+  
+            <div class="form-actions">
+              <div class="card-body">
+                <button type="submit" class="btn btn-success mr-3" (click)="modal.dismiss('Cross click')">
+                  <i class="fa fa-check"></i> Update</button>
+                <button type="button" class="btn btn-dark" (click)="modal.dismiss('Cross click')">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+  
+    </div>
+  </ng-template>
+
+  <!-- delete modal -->
+<ng-template #userDelete let-modal>
+    <div class="modal-body">
+      <p>Are You Sure want to delete this user?</p>
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary mr-2" aria-label="Close"
+          (click)="modal.dismiss('Cross click')">Yes</button>
+        <button type="button" class="btn btn-seconadary" aria-label="Close"
+          (click)="modal.dismiss('Cross click')">No</button>
+      </div>
+    </div>
+  </ng-template>

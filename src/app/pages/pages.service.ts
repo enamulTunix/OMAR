@@ -27,10 +27,18 @@ export class PagesService {
   }
   postApi(endPointURL,body){
      return this.http.post(this.baseUrl + endPointURL, body)
-
   }
+  deleteApi(endPointURL,body){
+    return this.http.delete(this.baseUrl + endPointURL, body)
+ }
+ putApi(endPointURL,body){
+  return this.http.put(this.baseUrl + endPointURL, body)
+}
   getApi(endPointURL){
     return this.http.get(this.baseUrl + endPointURL)
-
  }
+
+ getCountrycode(){
+  return this.http.get('assets/json/countriesData.js')
+}
 }

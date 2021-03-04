@@ -1,8 +1,6 @@
 <div class="row">
     <!-- Column -->
-
-
-    <div class="col-lg-12">
+ <div class="col-lg-12">
         <div class="card">
 
             <div class="card-body">
@@ -12,7 +10,7 @@
                             <div class="mb-2">
                                 <input type="text" class="form-control" (keyup)="searchFormSubmit()" id="prenametext" placeholder="Search" formControlName="search">
                             </div>
-                            
+
                         </form>
                     </div>
                     <div class="col-md-8  d-flex justify-content-end">
@@ -21,11 +19,11 @@
                                 Status
                             </button>
                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                <button class="dropdown-item">Active</button>
-                                <button class="dropdown-item">Inactive</button>
+                                <button class="dropdown-item" (click)="Activate()">Active</button>
+                                <button class="dropdown-item" (click)="DeActivate()">Inactive</button>
                             </div>
                         </div>
-                        <button class="btn btn-primary mb-2 mr-2"><i class="sl-icon-cloud-download"></i> Export
+                        <button class="btn btn-primary mb-2 mr-2" (click)="exportCsv()" ><i class="sl-icon-cloud-download"></i> Export
                             CSV</button>
                         <button class="btn btn-seconadary mb-2" (click)="addUserModal(addUser)"><i
                                 class="sl-icon-plus"></i> Add
@@ -35,7 +33,7 @@
                         <table class="table v-middle product-overview" id="zero_config">
                             <thead>
                                 <tr>
-                                    <!-- <th>Photo</th> -->
+                                    <th>S.No</th>
                                     <th>Name</th>
                                     <th>User ID</th>
                                     <th>Email ID</th>
@@ -53,7 +51,7 @@
                                 <tr *ngFor="let items of UserList | paginate : {itemsPerPage:itemPerPage, currentPage:currentPage, totalItems:totalItems}; let i=index">
                                     <!-- <td>
                     <img src="assets/images/users/2.jpg" alt="iMac" width="60" class="rounded-circle">
-                  </td> -->
+                  </td> --><td>{{itemPerPage * (currentPage-1)+ i+1}}</td>
                                     <td><span class="nowrap">
                                             {{items?.firstName + ' ' + items?.lastName||'N/A'}}
                                         </span>
@@ -64,7 +62,8 @@
                                     <td><span
                                             class="text-nowrap">{{items?.countryCode||'N/A'}}-{{items?.phone||'N/A'}}</span>
                                     </td>
-                                    <td><a routerLink="../orderhistory" class="btn btn-info">View</a></td>
+                                    <!-- [routerLink]="['/view-product-management',items?._id]" -->
+                                    <td><a  (click)="orderhistory(items?._id)" class="btn btn-info">View</a></td>
                                     <td><button class="btn btn-light" (click)="passwordModal(password)">Reset</button>
                                     </td>
                                     <td>
@@ -78,14 +77,14 @@
                                             </button>
 
                                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class=" pb-5">
-                                                <button class="dropdown-item" (click)="userprofileModal(userprofile)"><i
+                                                <button class="dropdown-item" (click)="userprofileModal(userprofile,items?._id)"><i
                                                         class="ti-eye"></i>
                                                     View
                                                 </button>
-                                                <button class="dropdown-item" (click)="userDetailModal(userDetail)"><i
+                                                <button class="dropdown-item" (click)="userDetailModal(userDetail,items?._id)"><i
                                                         _ngcontent-axh-c146="" class="ti-marker-alt"></i> Edit</button>
 
-                                                <button class="dropdown-item" (click)="userDeleteModal(userDelete)"><i class="ti-trash"></i>
+                                                <button class="dropdown-item" (click)="userDeleteModal(userDelete,items?._id)"><i class="ti-trash"></i>
                                                     Delete</button>
                                             </div>
                                         </div>
@@ -138,8 +137,9 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="m-t-30 text-center">
-                                <img src="assets/images/users/5.jpg" class="rounded-circle" width="120" />
-                                <h4 class="card-title m-t-10">Hanna Gover</h4>
+                                <!-- [src]="imgurl?imgurl:'https://www.w3schools.com/howto/img_avatar.png'" -->
+                                <img [src]="imgurl?imgurl:'assets/images/users/5.jpg'" class="rounded-circle" width="120" />
+                                <h4 class="card-title m-t-10">{{particularUser?.firstName+' '+ particularUser?.lastName||'N/A'}}</h4>
 
                             </div>
                         </div>
@@ -159,19 +159,18 @@
                                             <div class="col-md-6">
                                                 <ul class="list-block">
                                                     <li class="list-block-listing">Name: <span
-                                                            class="font-weight-600">Hanna Gover</span></li>
+                                                            class="font-weight-600">{{particularUser?.firstName+' '+ particularUser?.lastName||'N/A'}}</span></li>
                                                     <li class="list-block-listing">Email: <span
-                                                            class="font-weight-600">Hannagover@gmail.com</span>
+                                                            class="font-weight-600">{{particularUser?.email||'N/A'}}</span>
                                                     </li>
                                                     <li class="list-block-listing">Gender: <span
-                                                            class="font-weight-600">Female</span>
+                                                            class="font-weight-600">{{particularUser?.gender||'N/A'}}</span>
                                                     </li>
                                                     <li class="list-block-listing">Phone No: <span
-                                                            class="font-weight-600">+91-7858485474</span>
+                                                            class="font-weight-600">{{particularUser?.countryCode+'-'+ particularUser?.phone||'N/A'}}</span>
                                                     </li>
                                                     <li class="list-block-listing "> <span>Address: </span> <span
-                                                            class="font-weight-600">3750
-                                                            Grove Avenue, Clinton</span>
+                                                            class="font-weight-600">{{particularUser?.address||'N/A'}}</span>
                                                     </li>
 
 
@@ -180,7 +179,6 @@
                                             </div>
                                             <!-- <div class="col-md-6">
                         <ul class="list-block">
-
                           <li class="list-block-listing">Total Bike: <span class="font-weight-600">1</span></li>
                           <li class="list-block-listing">Bike Name: <span>Pulsar </span></li>
                           <li class="list-block-listing">Bike No: <span>HR-04-V-2433</span></li>
@@ -224,7 +222,7 @@
             <p>Are You Sure want to delete this user?</p>
             <div class="btn-group">
                 <button type="button" class="btn btn-primary mr-2" aria-label="Close"
-                    (click)="modal.dismiss('Cross click')">Yes</button>
+                    (click)="deleteUser()">Yes</button>
                 <button type="button" class="btn btn-seconadary" aria-label="Close"
                     (click)="modal.dismiss('Cross click')">No</button>
             </div>
@@ -251,14 +249,14 @@
     <ng-template #userDetail let-modal>
         <div class="modal-body">
             <div class="card">
-                <form action="#">
+                <form [formGroup]="EditUserForm">
                     <div class="form-body">
                         <div class="card-body">
                             <div class="row p-t-20">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">User Name</label>
-                                        <input type="text" id="firstName" class="form-control" placeholder="John doe">
+                                        <input type="text" id="firstName" class="form-control" placeholder="Enter your full name" formControlName="fullName">
 
                                     </div>
                                 </div>
@@ -267,7 +265,7 @@
                                     <div class="form-group has-success">
                                         <div class="form-group">
                                             <label class="control-label">Upload User Profile</label>
-                                            <div class="custom-file"><input class="custom-file-input"
+                                            <div class="custom-file"><input class="custom-file-input"(change)="handleInputChange($event)"
                                                     id="inputGroupFile01" type="file"><label class="custom-file-label"
                                                     for="inputGroupFile01">Choose file</label></div>
                                         </div>
@@ -280,7 +278,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Contact No</label>
-                                        <input type="text" id="firstName" class="form-control" placeholder="John doe">
+                                        <input type="tel" id="firstName" class="form-control" placeholder="Enter contact number" formControlName="phone">
 
                                     </div>
                                 </div>
@@ -289,7 +287,7 @@
                                     <div class="form-group has-danger">
                                         <label class="control-label">Email</label>
                                         <input type="email" id="email" class="form-control form-control-danger"
-                                            placeholder="example@gmail.com">
+                                            placeholder="Enter a valid mail id" formControlName="email">
 
                                     </div>
                                 </div>
@@ -301,7 +299,7 @@
                                     <div class="form-group has-danger">
                                         <label class="control-label">Address</label>
                                         <input type="text" id="Address" class="form-control form-control-danger"
-                                            placeholder="Address">
+                                            placeholder="Enter your address" formControlName="address">
 
                                     </div>
                                 </div>
@@ -310,9 +308,9 @@
                                     <div class="form-group">
                                         <label class="control-label">Gender</label>
                                         <select class="form-control custom-select" data-placeholder="Choose a Category"
-                                            tabindex="1">
-                                            <option value="Category 1">Male</option>
-                                            <option value="Category 2">Female</option>
+                                            tabindex="1" formControlName="gender">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
                                         </select>
                                     </div>
                                 </div>
@@ -324,12 +322,12 @@
                                     <div class="form-group">
                                         <label class="control-label">User Status</label>
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio1" name="customRadio"
+                                            <input type="radio" id="customRadio1" formControlName="status" value=1
                                                 class="custom-control-input">
                                             <label class="custom-control-label" for="customRadio1">Active</label>
                                         </div>
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio2" name="customRadio"
+                                            <input type="radio" id="customRadio2" formControlName="status" value=0
                                                 class="custom-control-input">
                                             <label class="custom-control-label" for="customRadio2">Inactive</label>
                                         </div>
@@ -344,7 +342,7 @@
                         <div class="form-actions">
                             <div class="card-body">
                                 <button type="submit" class="btn btn-success mr-3"
-                                    (click)="modal.dismiss('Cross click')">
+                                    (click)="UpdateUser()">
                                     <i class="fa fa-check"></i> Update</button>
                                 <button type="button" class="btn btn-dark"
                                     (click)="modal.dismiss('Cross click')">Cancel</button>
@@ -361,14 +359,14 @@
     <ng-template #addUser let-modal>
         <div class="modal-body">
             <div class="card">
-                <form action="#">
+                <form [formGroup]="addUserForm">
                     <div class="form-body">
                         <div class="card-body">
                             <div class="row p-t-20">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">User Name</label>
-                                        <input type="text" id="firstName" class="form-control" placeholder="John doe">
+                                        <label class="control-label">Full Name</label>
+                                        <input type="text" id="firstName" formControlName="fullName" class="form-control" placeholder="Enter full name">
 
                                     </div>
                                 </div>
@@ -377,9 +375,9 @@
                                     <div class="form-group has-success">
                                         <div class="form-group">
                                             <label class="control-label">Upload User Profile</label>
-                                            <div class="custom-file"><input class="custom-file-input"
+                                            <div class="custom-file"><input class="custom-file-input" (change)="handleInputChange($event)"
                                                     id="inputGroupFile01" type="file"><label class="custom-file-label"
-                                                    for="inputGroupFile01">Choose file</label></div>
+                                                    for="inputGroupFile01">{{fileName}}</label></div>
                                         </div>
                                     </div>
                                 </div>
@@ -390,7 +388,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Contact No</label>
-                                        <input type="text" id="firstName" class="form-control" placeholder="John doe">
+                                        <input type="tel" formControlName="phone" id="firstName" class="form-control" placeholder="Enter contact number">
 
                                     </div>
                                 </div>
@@ -398,8 +396,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group has-danger">
                                         <label class="control-label">Email</label>
-                                        <input type="email" id="email" class="form-control form-control-danger"
-                                            placeholder="example@gmail.com">
+                                        <input type="email" id="email" formControlName="email" class="form-control form-control-danger"
+                                            placeholder="Enter a valid mail id">
 
                                     </div>
                                 </div>
@@ -410,8 +408,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group has-danger">
                                         <label class="control-label">Address</label>
-                                        <input type="text" id="Address" class="form-control form-control-danger"
-                                            placeholder="Address">
+                                        <input type="text" id="Address" formControlName="address" class="form-control form-control-danger"
+                                            placeholder="Enter your address">
 
                                     </div>
                                 </div>
@@ -419,10 +417,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Gender</label>
-                                        <select class="form-control custom-select" data-placeholder="Choose a Category"
+                                        <select class="form-control custom-select" data-placeholder="Choose a Category" formControlName="gender"
                                             tabindex="1">
-                                            <option value="Category 1">Male</option>
-                                            <option value="Category 2">Female</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
                                         </select>
                                     </div>
                                 </div>
@@ -435,12 +433,12 @@
                                     <div class="form-group">
                                         <label class="control-label">User Status</label>
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio1" name="customRadio"
-                                                class="custom-control-input">
+                                            <input type="radio" id="customRadio1" formControlName="status" value=1
+                                                class="custom-control-input" selected>
                                             <label class="custom-control-label" for="customRadio1">Active</label>
                                         </div>
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio2" name="customRadio"
+                                            <input type="radio" id="customRadio2" formControlName="status" value=0
                                                 class="custom-control-input">
                                             <label class="custom-control-label" for="customRadio2">Inactive</label>
                                         </div>
@@ -455,7 +453,7 @@
                         <div class="form-actions">
                             <div class="card-body">
                                 <button type="submit" class="btn btn-success mr-3"
-                                    (click)="modal.dismiss('Cross click')">
+                                    (click)="AddUser()" >         <!--  (click)="modal.dismiss('Cross click')" -->
                                     <i class="fa fa-check"></i> Add</button>
                                 <button type="button" class="btn btn-dark"
                                     (click)="modal.dismiss('Cross click')">Cancel</button>

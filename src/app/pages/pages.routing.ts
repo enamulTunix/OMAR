@@ -25,7 +25,16 @@ import { UserhistoryComponent } from './userhistory/userhistory.component';
 import { PromocodeComponent } from './promocode/promocode.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { UserticketsComponent } from './usertickets/usertickets.component';
+import { UserbikedetailComponent } from './userbikedetail/userbikedetail.component';
+import { EvebtdetailComponent } from './evebtdetail/evebtdetail.component';
 // import { UsersDetailComponent } from './users-detail/users-detail.component';
+import { BikedetailComponent } from './bikedetail/bikedetail.component';
+import { RewardhistoryComponent } from './rewardhistory/rewardhistory.component';
+import { NotificationhistoryComponent } from './notificationhistory/notificationhistory.component';
+import { VendorbikedetailComponent } from './vendorbikedetail/vendorbikedetail.component';
+import { VendoreventComponent } from './vendorevent/vendorevent.component';
+import { VendoreventdetailComponent } from './vendoreventdetail/vendoreventdetail.component';
+import { SubaccountComponent } from './subaccount/subaccount.component';
 
 
 export const PagesRoutes: Routes = [
@@ -66,7 +75,18 @@ export const PagesRoutes: Routes = [
         }
       },
       {
-        path: 'orderhistory',
+        path: 'userbikes',
+        component: UserbikedetailComponent,
+        data: {
+          title: 'User Bikes Detail',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'User Bikes Detail' }
+          ]
+        }
+      },
+      {
+        path: 'orderhistory/:id',
         component: OrderHistoryComponent,
         data: {
           title: 'Order History',
@@ -102,10 +122,55 @@ export const PagesRoutes: Routes = [
         path: 'vendorsdetail',
         component: VendordetailComponent,
         data: {
-          title: 'Vendors Detail',
+          title: 'Vendor Detail',
           urls: [
             { title: 'Dashboard', url: '/dashboard' },
             { title: 'Vendors Detail' }
+          ]
+        }
+      },
+      {
+        path: 'vendorbikedetail',
+        component: VendorbikedetailComponent,
+        data: {
+          title: 'Vendor Bike Detail',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'Vendors Bike Detail' }
+          ]
+        }
+      },
+      {
+        path: 'subaccount',
+        component: SubaccountComponent,
+        data: {
+          title: 'Sub Account Detail',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'Sub Account Detail' }
+          ]
+        }
+      },
+      
+      {
+        path: 'vendorevent',
+        component: VendoreventComponent,
+        data: {
+          title: 'Vendor Events',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'Vendors Event' }
+          ]
+        }
+      },
+      {
+        path: 'vendoreventdetail',
+        component: VendoreventdetailComponent,
+        data: {
+          title: 'Vendor Events Detail',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'Vendors Event Detail' }
           ]
         }
       },
@@ -121,6 +186,17 @@ export const PagesRoutes: Routes = [
         }
       },
       {
+        path: 'eventsdetail',
+        component: EvebtdetailComponent,
+        data: {
+          title: 'Event Detail',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'Event Detail'}
+          ]
+        }
+      },
+      {
         path: 'rewards',
         component: RewardsComponent,
         data: {
@@ -128,6 +204,17 @@ export const PagesRoutes: Routes = [
           urls: [
             { title: 'Dashboard', url: '/dashboard' },
             { title: 'Rewards' }
+          ]
+        }
+      },
+      {
+        path: 'rewardshistory',
+        component: RewardhistoryComponent,
+        data: {
+          title: 'Rewards History',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'Rewards History' }
           ]
         }
       },
@@ -202,10 +289,21 @@ export const PagesRoutes: Routes = [
         path: 'bikes',
         component: BikesComponent,
         data: {
-          title: 'Bikes',
+          title: 'Rides',
           urls: [
             { title: 'Dashboard', url: '/dashboard' },
-            { title: 'Bikes' }
+            { title: 'Rides' }
+          ]
+        }
+      },
+      {
+        path: 'bikesdetail',
+        component: BikedetailComponent,
+        data: {
+          title: 'Bikes Detail',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'Bikes Detail' }
           ]
         }
       },
@@ -295,6 +393,17 @@ export const PagesRoutes: Routes = [
           urls: [
             { title: 'Dashboard', url: '/notification' },
             { title: 'Notification' }
+          ]
+        }
+      },
+      {
+        path: 'notificationhistory',
+        component: NotificationhistoryComponent,
+        data: {
+          title: 'Notification History',
+          urls: [
+            { title: 'Dashboard', url: '/notification_history' },
+            { title: 'Notification History' }
           ]
         }
       },

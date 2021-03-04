@@ -1,104 +1,108 @@
+<div class="card">
 <div class="card-body">
     <div class="row">
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-6 ">
-                    <div class="form-group">
-                        <label>User Name</label>
-                        <input type="text" class="form-control">
+        <div class="col-md-12  text-right">
+          <div ngbDropdown placement="top" class="d-inline-block mb-2">
+            <button class="btn btn-outline-primary " id="dropdownBasic1" ngbDropdownToggle>
+              Notification
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            
+              <button class="dropdown-item" > Enable </button>
+
+              <button class="dropdown-item" >Disable</button>
+            </div>
+          </div>
+        
+            <div class="row form-group">
+                <div class="col-md-5">
+                    <div class="b-label">
+                    <label class="control-label col-form-label">One Reward Point spent</label>
+                  </div>
+                </div>  
+                <div class="col-md-7">                      
+                    <input type="text" class="form-control" placeholder="SAR">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-5">
+                    <div class="b-label">
+                    <label class="control-label col-form-label">Minimum Vendor Commision (MVC) used for rewards</label>
+                </div>
+                </div>  
+                <div class="col-md-7">  
+                                        
+                    <input type="text" class="form-control" placeholder="%">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-5">
+                    <div class="b-label">
+                    <label class="control-label col-form-label">Reward points percentage calculated per (MVC)</label>
                     </div>
-                </div>
-                <div class="col-md-6 ">
-                    <div class="form-group">
-                        <label>User ID</label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                
-            </div>
-       
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Reward </label>
-                    <select class="custom-select col-12" id="example-month-input2">
-                        <option selected="">Rewards gained by bikes</option>
-                        <option value="free">Rewards gained by events</option>
-                        <option value="Discount">Rewards spent for bikes</option>                   
-                        <option value="Discount">Rewards spent for events</option>                   
-                        <option value="Discount">Rewards gained by admin</option>                   
-                    </select>
+                </div>  
+                <div class="col-md-7">                      
+                    <input type="text" class="form-control" placeholder="%">
                 </div>
             </div>
-           
-              <!--/span-->
-              <div class="col-md-6">
-                <div class="form-group">
-                    <label>Reward Points</label>
-                    <input type="text" class="form-control" value="10">
+            <div class="row form-group">
+                <div class="col-md-5">
+                    <div class="b-label">
+                    <label class="control-label col-form-label">Reward point per customer rating</label>
                 </div>
-            </div>
-            <!--/span-->
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h4>Successful Orders</h4>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Reward Amount Bike</label>
-                    <input type="text" class="form-control" placeholder="Add Points">
+                </div>  
+                <div class="col-md-7">                      
+                    <input type="text" class="form-control" placeholder="Point">
                 </div>
-            </div>
-            <!--/span-->
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Reward Amount Event</label>
-                    <input type="text" class="form-control" placeholder="Add Points">
-                </div>
-            </div>
-            <!--/span--> 
-            <div class="col-md-12">
-                <h4>Total Points Each Review Earned By Users</h4>
-                <div class="form-group">
-                    <label>Rewards Point</label>
-                    <input type="text" class="form-control" placeholder="Add Points">
-                </div>
-            </div>  
-        </div>
-        <div class="col-md-12">
+            </div>       
+      
+        <div class="col-md-12 text-right">
             <button class="btn btn-primary">Save</button>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="col-md-12">
-            
-            <div class="form-group">
-                <label>One Reward Point spent</label>
-                <input type="text" class="form-control" placeholder="SAR">
-            </div>
-        </div>  
-        <div class="col-md-12">
-           
-            <div class="form-group">
-                <label> Rewards Point Gain Bike</label>
-                <input type="text" class="form-control" placeholder="SAR">
-            </div>
-        </div>  
-        <div class="col-md-12">
-          
-            <div class="form-group">
-                <label> Rewards Point Gain Event</label>
-                <input type="text" class="form-control" placeholder="SAR">
-            </div>
-        </div>  
-        <button class="btn btn-primary">Save</button>
-    </div>
-    </div>
-   
-   
-   
-    
-     
   
+    </div>
+    <div class="row  pr-2 mt-2 ">
+        <div class="col-md-4">
+          <form>
+            <div class="mb-2">
+              <input type="text" class="form-control" id="prenametext" placeholder="Search">
+            </div>
+          </form>
+        </div>
+        <!-- <div class="col-md-8 mb-2 text-right">
+          <div ngbDropdown placement="top" class="d-inline-block">
+            <button class="btn btn-outline-primary " id="dropdownBasic1" ngbDropdownToggle>
+              Payment
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button class="dropdown-item" > All </button>
+              <button class="dropdown-item" > Paid </button>
+
+              <button class="dropdown-item" >Unpaid</button>
+            </div>
+          </div>
+        </div> -->
+      </div> 
+    <div class="table-responsive mt-3">
+        <table class="table">
+            <tr>
+                <th>No</th>                
+                <th>Order No</th>
+                <th>Customer Name</th>
+                <th>Customer ID</th>
+                <th>Gain Point</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>#656565 <a routerLink="/pages/orderhistory" ><i class="fas fa-info-circle"></i></a></td>
+                <td>Sam</td>
+                <td>Sam0454</td>                
+                <td>5</td>                
+            </tr>
+           
+        </table>
+    </div>
+  
+</div>
 </div>

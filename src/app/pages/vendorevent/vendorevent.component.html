@@ -1,0 +1,60 @@
+<div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4">
+        <form>
+          <div class="mb-2">
+            <input type="text" class="form-control" id="prenametext" placeholder="Search">
+          </div>
+        </form>
+      </div>
+      <div class="col-md-8  text-right">
+        <a routerLink="/pages/vendors" class="btn btn-primary text-white mr-2 mb-2">Back</a>
+        <button class="btn btn-primary mb-2 mr-2"><i class="sl-icon-cloud-download"></i> Export CSV</button>
+        <!-- <button class="btn btn-seconadary mb-2" (click)="addBikeModal(addBike)"><i class="sl-icon-plus"></i> Add
+          Bike</button> -->
+      </div>
+      </div>
+        <div class="table-responsive">
+            <table class="table v-middle product-overview" id="zero_config">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Event Name</th>    
+                  <th>Event Type</th>    
+                  <th>Start Date</th>
+                  <th>End Date</th>                  
+                  <th>Ticket Price</th>                  
+                  <th class="text-nowrap">Confirmed Seats</th>
+                  <th>Avaible Seats</th>
+                  <th>Total Seats</th>
+                  <th class="text-nowrap">Cancellation Rules</th>
+                  <th>Order Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td> 1  </td>
+                  <td class="text-nowrap">Digital Elite Camp (434545451)</td>
+                  <!-- <td>434545451</td> -->             
+                  <td>Public </td>
+                  <td class="text-nowrap">16-02/2021/8:30 PM</td>
+                  <td class="text-nowrap">16-02/2021/11:30 PM</td>
+                  <td class="text-nowrap">$15</td>
+                 
+                  
+                  <td>70</td>
+                  <td>30</td>
+                  <td>100</td>
+                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                  <td class="text-nowrap">
+                   <a routerLink="/pages/vendoreventdetail" class="btn btn-info">Veiw Orders</a>
+
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+    </div>
+</div>

@@ -10,19 +10,19 @@
           <div class="col-md-4">
             <form>
               <div class="mb-2">
-                <input type="text" class="form-control" id="prenametext" placeholder="Search">
+                <input type="text" class="form-control" id="prenametext" (keyup)="searchFormSubmit()" [ngModelOptions]="{standalone: true}" placeholder="Search" [(ngModel)]="searchByName">
               </div>
             </form>
           </div>
           <div class="col-md-8 d-flex  justify-content-end">
-            <button class="btn btn-primary mb-2 mr-2"><i class="sl-icon-cloud-download"></i> Export CSV</button>
+            <button class="btn btn-primary mb-2 mr-2" (click)="exportCsv()"><i class="sl-icon-cloud-download"></i> Export CSV</button>
             <div ngbDropdown class="d-inline-block mb-2 mr-2">
               <button class="btn btn-info text-white" id="dropdownBasic1" ngbDropdownToggle>
                 Status
               </button>
               <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button class="dropdown-item">Active</button>
-                <button class="dropdown-item">Inactive</button>
+                <button class="dropdown-item" (click)="Activate()">Active</button>
+                <button class="dropdown-item" (click)="DeActivate()">Inactive</button>
               </div>
             </div>
             <div ngbDropdown class="d-inline-block mb-2">
@@ -50,34 +50,89 @@
             <table class="table v-middle product-overview" id="zero_config">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Vendor ID</th>
-                  <th>Account Type</th>
-                  <th>Business Type</th>
-                  <th>Email Id</th>
-                  <th>Contact</th>
-                  <th>Address</th>                
-                  <th>Status</th>
-                  <th>Action</th>
+                    <th>S.No</th>
+                    <th>Name</th>
+                    <th>Vendor ID</th>
+                    <th>Account Type</th>
+                    <th>Business Type</th>
+                    <th class="text-nowrap">Total Bikes</th>
+                    <th class="text-nowrap">Total Event</th>
+                    <th class="text-nowrap">Total Sub Account</th>
+                    <th>Detail</th>
+                    <!-- <th>Start Date</th>
+                    <th>End Date</th> -->
+                    <th>Email Id</th>
+                    <th>Contact</th>
+                    <th>Address</th>
+                    <th>Status</th>
+                    <th>Commision</th>
+                    <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
+                  <td>1</td>
                   <td><span class="nowrap"> Ronny </span></td>
                   <td>#ron34343</td>
                   <td>Main</td>
                   <td>Bike</td>
+                  <td>20</td>
+                  <td>N/A</td>
+                  <td class="text-nowrap">4<a routerLink="/pages/subaccount" class="label text-primary"><i class=" fas fa-eye"></i></a>
+                     <!-- <a href="javascript:void()" (click)="editdetailModal(editdetail)" class="text-primary"><i class="  fas fa-pencil-alt"></i></a> -->
+                    </td> 
+                  <td><a [routerLink]="['/pages/vendorsdetail']" class="btn btn-info">View Bikes</a></td>
+                  <!-- <td class="text-nowrap">12-04-2020/4:00PM</td>-->
                   <td>example@gmail.com</td>
                   <td><span class="text-nowrap">+91-7858485474</span></td>
-                  <td><span class="text-nowrap">3750 Grove Avenue,</span> Clinton</td>                  
+                  <td><span class="text-nowrap">3750 Grove Avenue,</span> Clinton</td>
+                  <td>
+                    <div ngbDropdown class="d-inline-block">
+                      <button class="btn btn-outline-danger" id="dropdownBasic1" ngbDropdownToggle>
+                        Status
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" container="body">
+                        <button class="dropdown-item" >Active</button>
+                        <button class="dropdown-item">Inactive</button>
+                      </div>
+                    </div>
+                  </td>
+                  <td>0%</td>
+                  <td>
+                    <div ngbDropdown placement="bottom" class="d-inline-block" placement="bottom" container="body">
+                      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                        Action
+                      </button>
+
+                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1"    >
+                        <button class="dropdown-item" (click)="userprofileModal(userprofile)"><i class="ti-eye"></i>
+                          View
+                        </button>
+                        <button class="dropdown-item" (click)="userDetailModal(userDetail)"><i _ngcontent-axh-c146=""
+                            class="ti-marker-alt"></i> Edit Commision</button>
+                        <!-- <button class="dropdown-item" (click)="userDeleteModal(userDelete)"><i class="ti-trash"></i>
+                          Delete</button> -->
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr  *ngFor="let items of UserList | paginate : {itemsPerPage:itemPerPage, currentPage:currentPage, totalItems:totalItems}; let i=index">
+                  <td>{{itemPerPage * (currentPage-1)+ i+1}}</td>
+                  <td><span class="nowrap"> {{items?.firstName + ' ' + items?.lastName||'N/A'}}</span></td>
+                  <td> {{items?.userName||'N/A'}}</td>
+                  <td> {{items?.accountType||'N/A'}}</td>
+                  <td>{{items?.businessType||'N/A'}}</td>
+                  <td>{{items?.email||'N/A'}}</td>
+                  <td><span class="text-nowrap">{{items?.countryCode + '-' + items?.phone||'N/A'}}</span></td>
+                  <td><span class="text-nowrap">{{items?.address||'N/A'}}</span></td>                  
                   <td>
                     <div ngbDropdown class="d-inline-block">
                       <button class="btn btn-outline-danger" id="dropdownBasic1" ngbDropdownToggle>
                         Pending
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button class="dropdown-item" (click)="vendorConfirmModal(vendorConfirm)">Active</button>
-                        <button class="dropdown-item" (click)="vendorUnconfirmModal(vendorUnconfirm)">Inactive</button>
+                        <button class="dropdown-item" >Active</button>
+                        <button class="dropdown-item">Inactive</button>
                       </div>
                     </div>
                   </td>
@@ -92,89 +147,22 @@
                           View
                         </button>
                         <button class="dropdown-item" (click)="userDetailModal(userDetail)"><i _ngcontent-axh-c146=""
-                            class="ti-marker-alt"></i> Edit Profile</button>
-                        <button class="dropdown-item" (click)="userDeleteModal(userDelete)"><i class="ti-trash"></i>
+                            class="ti-marker-alt"></i> Edit Commision</button>
+                        <button class="dropdown-item" (click)="userDeleteModal(userDelete,items?._id)"><i class="ti-trash"></i>
                           Delete</button>
                       </div>
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td><span class="nowrap"> Ronny </span></td>
-                  <td>#ron34343</td>
-                  <td>Main</td>
-                  <td>Event</td>
-                  <td>example@gmail.com</td>
-                  <td><span class="text-nowrap">+91-7858485474</span></td>
-                  <td><span class="text-nowrap">3750 Grove Avenue,</span> Clinton</td>
-                   <td>
-                    <div ngbDropdown class="d-inline-block ">
-                      <button class="btn btn-outline-danger" id="dropdownBasic1" ngbDropdownToggle>
-                        Pending
-                      </button>
-                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button class="dropdown-item" (click)="vendorConfirmModal(vendorConfirm)">Active</button>
-                        <button class="dropdown-item" (click)="vendorUnconfirmModal(vendorUnconfirm)">Inactive</button>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div ngbDropdown placement="bottom" class="d-inline-block">
-                      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
-                        Action
-                      </button>
-
-                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class=" pb-5">
-                        <button class="dropdown-item" (click)="userprofileModal(userprofile)"><i class="ti-eye"></i>
-                          View
-                        </button>
-                        <button class="dropdown-item" (click)="userDetailModal(userDetail)"><i _ngcontent-axh-c146=""
-                            class="ti-marker-alt"></i> Edit</button>
-                        <button class="dropdown-item" (click)="userDeleteModal(userDelete)"><i class="ti-trash"></i>
-                          Delete</button>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><span class="nowrap"> Ronny </span></td>
-                  <td>#ron34343</td>
-                  <td>Main</td>
-                  <td>Event</td>
-                  <td>example@gmail.com</td>
-                  <td><span class="text-nowrap">+91-7858485474</span></td>
-                  <td><span class="text-nowrap">3750 Grove Avenue,</span> Clinton</td>
-                  <td>
-                    <div ngbDropdown class="d-inline-block ">
-                      <button class="btn btn-outline-danger" id="dropdownBasic1" ngbDropdownToggle>
-                        Pending
-                      </button>
-                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button class="dropdown-item" (click)="vendorConfirmModal(vendorConfirm)">Active</button>
-                        <button class="dropdown-item" (click)="vendorUnconfirmModal(vendorUnconfirm)">Inactive</button>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div ngbDropdown placement="bottom" class="d-inline-block">
-                      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
-                        Action
-                      </button>
-
-                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class=" pb-5">
-                        <button class="dropdown-item" (click)="userprofileModal(userprofile)"><i class="ti-eye"></i>
-                          View
-                        </button>
-                        <button class="dropdown-item" (click)="userDetailModal(userDetail)"><i _ngcontent-axh-c146=""
-                            class="ti-marker-alt"></i> Edit</button>
-                        <button class="dropdown-item" (click)="userDeleteModal(userDelete)"><i class="ti-trash"></i>
-                          Delete</button>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+               
+                <tr *ngIf="totalItems==0">
+                  <td class="table-no-record" colspan="9">No Record Found</td>
+              </tr>
               </tbody>
             </table>
+            <div class="custom-pagination mt-2 text-align-end" *ngIf="totalItems>itemPerPage">
+              <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+          </div>
           </div>
         </div>
       </div>
@@ -296,7 +284,7 @@
       <p>Are You Sure want to delete this user?</p>
       <div class="btn-group">
         <button type="button" class="btn btn-primary mr-2" aria-label="Close"
-          (click)="modal.dismiss('Cross click')">Yes</button>
+          (click)="deleteUser()">Yes</button>
         <button type="button" class="btn btn-seconadary" aria-label="Close"
           (click)="modal.dismiss('Cross click')">No</button>
       </div>
@@ -338,7 +326,8 @@
   </ng-template>
 
   <!-- add user -->
-  <ng-template #addUser let-modal>
+   <!-- add user -->
+   <ng-template #addUser let-modal>
     <div class="modal-body">
       <div class="card">
         <form action="#">
@@ -401,18 +390,18 @@
                   </div>
                 </div>
                 <!--/span-->
-               
+
               </div>
               <!--/row-->
               <div class="row">
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Vendor Id </label>
                     <input type="text" id="bike_name" name="bike_name" class="form-control" placeholder="Ron#23456">
                   </div>
-                </div>
+                </div> -->
                 <!--/span-->
-               
+
                 <!--/span-->
                 <div class="col-md-6">
                   <div class="form-group">
@@ -452,6 +441,78 @@
                 <!--/span-->
               </div>
               <!--/row-->
+              <div class="row">
+                <div class="col-md-12">
+                  <h3>Vendor Document</h3>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">IBAN No</label>
+                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="IBAN No">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Bank Name</label>
+                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Bank Name">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group has-success">
+                    <div class="form-group">
+                      <label class="control-label">Commercial registration attachment </label>
+                      <div class="custom-file"><input class="custom-file-input" id="inputGroupFile01" type="file"><label
+                          class="custom-file-label" for="inputGroupFile01">Choose file</label></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Commercial registration ID </label>
+                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Commercial registration ID ">
+                  </div>
+                </div>
+                 <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Tax ID </label>
+                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Tax ID ">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Tax Attachment </label>
+                    <div class="custom-file"><input class="custom-file-input" id="inputGroupFile01" type="file"><label
+                      class="custom-file-label" for="inputGroupFile01">Choose file</label></div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Tourism ID </label>
+                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Tourism ID ">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Tourism ID attachment  </label>
+                    <div class="custom-file"><input class="custom-file-input" id="inputGroupFile01" type="file"><label
+                      class="custom-file-label" for="inputGroupFile01">Choose file</label></div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Reset Password </label>
+                    <input type="password" id="Commision" name="Commision" class="form-control" placeholder="Reset ">
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Re-enter Password </label>
+                    <input type="password" id="Commision" name="Commision" class="form-control" placeholder="Reset ">
+                  </div>
+                </div>
+
+              </div>
             </div>
 
             <div class="form-actions">

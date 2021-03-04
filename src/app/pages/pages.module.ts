@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete'
-
+import { MatSliderModule } from '@angular/material/slider';
 import { PagesRoutes } from './pages.routing';
 import { HelperclassesComponent } from './helper-classes/hc.component';
 import { InvoiceComponent } from './invoice/invoice.component';
@@ -38,27 +38,38 @@ import { UserhistoryComponent } from './userhistory/userhistory.component';
 import { PromocodeComponent } from './promocode/promocode.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { UserticketsComponent } from './usertickets/usertickets.component';
-import { TranslateModule } from '@ngx-translate/core'
-import { NgxPaginationModule } from 'ngx-pagination';
-
+import { TranslateModule } from '@ngx-translate/core';
+import { UserbikedetailComponent } from './userbikedetail/userbikedetail.component';
+import { EvebtdetailComponent } from './evebtdetail/evebtdetail.component';
+import { BikedetailComponent } from './bikedetail/bikedetail.component';
+import { RewardhistoryComponent } from './rewardhistory/rewardhistory.component'
+import {MatSelectModule} from '@angular/material/select';
+import { NotificationhistoryComponent } from './notificationhistory/notificationhistory.component';
+import { VendorbikedetailComponent } from './vendorbikedetail/vendorbikedetail.component';
+import { VendoreventComponent } from './vendorevent/vendorevent.component';
+import { VendoreventdetailComponent } from './vendoreventdetail/vendoreventdetail.component';
 // import { UsersDetailComponent } from './users-detail/users-detail.component';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { SubaccountComponent } from './subaccount/subaccount.component';
 @NgModule({
   imports: [
-    CommonModule,
+    CommonModule, 
     RouterModule.forChild(PagesRoutes),
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    NgxPaginationModule,
     QuillModule.forRoot(),
     ChartsModule,
     ChartistModule,
     NgxChartsModule,
     NgxDatatableModule,
     GooglePlaceModule,
-    NgxPaginationModule,
-    
-    TranslateModule
+    TranslateModule,
+    MatSliderModule,
+    MatSelectModule,
+    MatDatepickerModule
+
   ],
   declarations: [
     HelperclassesComponent,
@@ -86,7 +97,16 @@ import { NgxPaginationModule } from 'ngx-pagination';
     UserhistoryComponent,
     PromocodeComponent,
     OrderHistoryComponent,
-    UserticketsComponent
+    UserticketsComponent,
+    UserbikedetailComponent,
+    EvebtdetailComponent,
+    BikedetailComponent,
+    RewardhistoryComponent,
+    NotificationhistoryComponent,
+    VendorbikedetailComponent,
+    VendoreventComponent,
+    VendoreventdetailComponent,
+    SubaccountComponent
   ]
 })
 export class PagesModule { }

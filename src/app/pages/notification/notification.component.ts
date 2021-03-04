@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {FormControl} from '@angular/forms';
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
@@ -11,5 +11,6 @@ export class NotificationComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  toppings = new FormControl();
+  toppingList: string[] = ['All Vendors', 'Bike Vendors','Specific Vendors' ,'Event Vendors', 'Vendor', 'All Users','Specific Users'];
 }

@@ -1,0 +1,318 @@
+<div class="row">
+    
+    <div class="col-lg-12">
+      <div class="card">
+         
+        <div class="card-body">
+            
+         
+          <div class="row">
+            <div class="col-md-4">
+                <form >
+                  <div class="mb-2">
+                      <input type="text" class="form-control" id="prenametext" placeholder="Search">
+                  </div>
+              </form>
+              </div>
+              <div class="col-md-8 text-right">
+                <a routerLink="/pages/vendorevent" class="btn btn-primary text-white mb-3">Back</a>
+              </div>
+            
+            <div class="table-responsive">
+              <table class="table v-middle product-overview" id="zero_config">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th class="text-nowrap">Event Name</th>                   
+                    <th>Event ID</th>                    
+                    <th>Start Date</th> 
+                    <th>End Date</th> 
+                    <th>Decription</th>
+                    <th>Attachment </th>
+                    <th class="text-nowrap">Booking Rules </th>
+                    <th class="text-nowrap">Cancellation Rules </th>
+                    <th class="text-nowrap"> Vendor rules</th>
+                    <th class="text-nowrap"> Pricing matrix </th>
+                    <th class="text-nowrap"> Action </th>
+                                  
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Rock On </td>                   
+                    <td>RockOn434334</td>                     
+                    <td class="text-nowrap">1-12-2020/12:40 PM</td>   
+                    <td class="text-nowrap">14-12-2020/11:00 AM</td>   
+                    <td>Lorem ipsum dolor sit amet consectetur..<a href="javascript:void()">Read More</a></td>
+                    <td><img src="assets/images/gallery/driving-licence.jpg" class="img-fluid" width="80px"></td>
+                    <td>Lorem ipsum dolor sit amet consectetur..<a href="javascript:void()">Read More</a></td>
+                    <td>Lorem ipsum dolor sit amet consectetur..<a href="javascript:void()">Read More</a></td>
+                    <td>Lorem ipsum dolor sit amet consectetur..<a href="javascript:void()">Read More</a></td>
+                    <td class="text-nowrap">
+                      <span class="d-block">1 Ticket= 20 SAR</span>
+                      <span class="d-block">2 Tickets= 30 SAR</span>
+                      <span class="d-block">4 Tickets= 50 SAR </span>
+                      <span class="d-block"><a href="javascript:void()" (click)="editpriceModal(editprice)"><i class="mdi mdi-information"></i></a></span> 
+                      </td>
+                                 
+                    <td><div ngbDropdown placement="bottom" class="d-inline-block" container="body">
+                        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                          Action
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" container="body">
+                          <button class="dropdown-item" (click)="editOrderModal(editOrder)"><i _ngcontent-axh-c146=""
+                              class="ti-marker-alt"></i> Edit</button>
+                          <button class="dropdown-item" (click)="userDeleteModal(userDelete)"><i class="ti-trash"></i>
+                            Delete</button>
+                        </div>
+                      </div></td>                 
+                  </tr>
+                
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+    </div>
+  </div>
+ 
+
+  
+
+
+  <!-- view modal -->
+
+
+  <!-- delete modal -->
+  <ng-template #userDelete let-modal>
+    <div class="modal-body">
+      <p>Are You Sure want to delete?</p>
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary mr-2" aria-label="Close"
+          (click)="modal.dismiss('Cross click')">Yes</button>
+        <button type="button" class="btn btn-seconadary" aria-label="Close"
+          (click)="modal.dismiss('Cross click')">No</button>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- add user -->
+  <ng-template #editOrder let-modal>
+    <div class="modal-body">
+      <div class="card">
+        <form action="#">
+          <div class="form-body">
+            <div class="card-body">
+              <div class="row p-t-20">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label"> Event Organizer </label>
+                    <input type="text" id="firstName" class="form-control" placeholder="Organizer Name">
+
+                  </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Organizer ID </label>
+                    <input type="text" id="firstName" class="form-control" placeholder="Organizer ID">
+
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label"> Event Name </label>
+                    <input type="text" id="firstName" class="form-control" placeholder="Event Name">
+
+                  </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Event ID </label>
+                      <input type="text" id="firstName" class="form-control" placeholder="Event ID">
+  
+                    </div>
+                  </div>
+                  <!--/span-->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Ticket Price </label>
+                      <input type="text" id="firstName" class="form-control" placeholder="$15">  
+                    </div>
+                  </div>
+                  <!--/span-->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Event Type </label>
+                      <select class="form-control">
+                        <option value="public">Public</option>
+                        <option value="public">Private</option>
+                        </select> 
+                    </div>
+                  </div>
+                  <!--/span-->
+             
+              </div>
+              <!--/row-->
+              <div class="row ">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Description </label>
+                      <textarea   class="form-control" placeholder="Description"></textarea>
+  
+                    </div>
+                  </div>
+                  <!--/span-->
+                  
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label"> Cancellation Rules  </label>
+                    <textarea class="form-control" placeholder="Cancellation Rules"></textarea>
+
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label"> Booking Rules  </label>
+                    <textarea class="form-control" placeholder="Cancellation Rules"></textarea>
+
+                  </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label"> Vendor Rules   </label>
+                      <textarea class="form-control" placeholder="Cancellation Rules"></textarea>
+  
+                    </div>
+                  </div>
+                  <!--/span-->
+                  <div class="col-md-6">
+                    <div class="form-group has-success">
+                      <div class="form-group">
+                        <label class="control-label">Attachment</label>
+                        <div class="custom-file"><input class="custom-file-input" id="inputGroupFile01" type="file"><label
+                            class="custom-file-label" for="inputGroupFile01">Choose file</label></div>
+                      </div>
+                    </div>
+                  </div>
+                <div class="col-md-6">
+                    <div class="form-group has-danger">
+                      <label class="control-label">Ticket No</label>
+                      <input type="email" id="email" class="form-control form-control-danger" placeholder="#343434">
+  
+                    </div>
+                  </div>
+                  <!--/span-->
+              </div>
+              <!--/row-->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group has-danger">
+                    <label class="control-label">Start Date</label>
+                    <input type="date" id="email" class="form-control form-control-danger" placeholder="12-04-2021">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group has-danger">
+                    <label class="control-label">End Date</label>
+                    <input type="date" id="email" class="form-control form-control-danger" placeholder="12-04-2021">
+                  </div>
+                </div>
+              </div>
+              <!--/row-->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group has-danger">
+                    <label class="control-label">Start Time</label>
+                    <input type="time" id="email" class="form-control form-control-danger" placeholder="HH:MM">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group has-danger">
+                    <label class="control-label">End Time</label>
+                    <input type="time" id="email" class="form-control form-control-danger" placeholder="HH:MM">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <div class="card-body">
+                <button type="submit" class="btn btn-success mr-3" (click)="modal.dismiss('Cross click')">
+                  <i class="fa fa-check"></i> Update</button>
+                <button type="button" class="btn btn-dark" (click)="modal.dismiss('Cross click')">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </ng-template>
+  <ng-template #editprice let-modal>
+    <div class="modal-body">
+      <h4>Add Price Matrix</h4>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Add Ticket</label>
+            <input type="number" class="form-control" value="1">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Add Price</label>
+            <select name="" id="" class="form-control">
+              <option value="">10 SAR</option>
+              <option value="">20 SAR</option>
+              <option value="">30 SAR</option>
+              <option value="">40 SAR</option>
+              <option value="">50 SAR</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4 p-4">
+          <div class="d-flex">
+          <button class=" btn btn-primary mr-2"><i class="mdi mdi-plus"></i></button>
+          <button class="btn btn-danger"><i class="mdi mdi-minus"></i></button>
+        </div>
+        </div>
+      </div>  
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Add Tickets</label>
+            <input type="number" class="form-control" value="1">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Add Price</label>
+            <select name="" id="" class="form-control">
+              <option value="">10 SAR</option>
+              <option value="">20 SAR</option>
+              <option value="">30 SAR</option>
+              <option value="">40 SAR</option>
+              <option value="">50 SAR</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4 p-4">
+          <div class="d-flex">
+          <button class=" btn btn-primary mr-2"><i class="mdi mdi-plus"></i></button>
+          <button class="btn btn-danger"><i class="mdi mdi-minus"></i></button>
+        </div>
+        </div>
+       <div class="col-md-12">
+        <button class="btn btn-primary" (click)="modal.dismiss('Save')">Save</button>
+       </div>
+      </div>  
+    </div>
+  </ng-template>
