@@ -12,9 +12,14 @@
               <div class="mb-2">
                 <input type="text" class="form-control" id="prenametext" (keyup)="searchFormSubmit()" [ngModelOptions]="{standalone: true}" placeholder="Search" [(ngModel)]="searchByName">
               </div>
+              
             </form>
           </div>
-          <div class="col-md-8 d-flex  justify-content-end">
+          <button class="btn btn-circle btn-warning btn-sm " (click)="reset()" title="Refresh">
+            <i class="fas fa-undo"></i>
+           </button>
+          <div class="col d-flex  justify-content-end">
+            
             <button class="btn btn-primary mb-2 mr-2" (click)="exportCsv()"><i class="sl-icon-cloud-download"></i> Export CSV</button>
             <div ngbDropdown class="d-inline-block mb-2 mr-2">
               <button class="btn btn-info text-white" id="dropdownBasic1" ngbDropdownToggle>
@@ -44,7 +49,7 @@
               </div>
             </div>
             <!-- <button class="btn btn-primary mb-2 mr-2"><i class="sl-icon-cloud-download"></i> Export CSV</button> -->
-            <!-- <button class="btn btn-seconadary mb-2" (click)="addUserModal(addUser)"><i class="sl-icon-plus"></i> Add Vendor</button> -->
+            <button class="btn btn-seconadary mb-2 ml-2" (click)="addVendorModal(addUser)"><i class="sl-icon-plus"></i> Add Vendor</button>
           </div>
           <div class="table-responsive">
             <table class="table v-middle product-overview" id="zero_config">
@@ -70,34 +75,27 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td><span class="nowrap"> Ronny </span></td>
-                  <td>#ron34343</td>
-                  <td>Main</td>
-                  <td>Bike</td>
-                  <td>20</td>
-                  <td>N/A</td>
-                  <td class="text-nowrap">4<a routerLink="/pages/subaccount" class="label text-primary"><i class=" fas fa-eye"></i></a>
+                <tr  *ngFor="let items of UserList | paginate : {itemsPerPage:itemPerPage, currentPage:currentPage, totalItems:totalItems}; let i=index">
+                  <td>{{itemPerPage * (currentPage-1)+ i+1}}</td>
+                  <td><span class="nowrap"> {{items?.firstName + ' ' + items?.lastName||'N/A'}}</span></td>
+                  <td> {{items?.userName||'N/A'}}</td>
+                  <td> {{items?.accountType||'N/A'}}</td>
+                  <td>{{items?.businessType||'N/A'}}</td>
+                  <td>{{items?.totalBikes||'N/A'}}</td>
+                  <td>{{items?.totalEvents||'N/A'}}</td>
+                  <td class="text-nowrap">4<a (click)="SubAccount(items?._id)" class="label text-primary"><i class=" fas fa-eye"></i></a>
                      <!-- <a href="javascript:void()" (click)="editdetailModal(editdetail)" class="text-primary"><i class="  fas fa-pencil-alt"></i></a> -->
                     </td> 
-                  <td><a [routerLink]="['/pages/vendorsdetail']" class="btn btn-info">View Bikes</a></td>
+                  <td><a [routerLink]="['/pages/vendorsdetail',items?._id]" class="btn btn-info">View Bikes</a></td>
                   <!-- <td class="text-nowrap">12-04-2020/4:00PM</td>-->
-                  <td>example@gmail.com</td>
-                  <td><span class="text-nowrap">+91-7858485474</span></td>
-                  <td><span class="text-nowrap">3750 Grove Avenue,</span> Clinton</td>
+                  <td>{{items?.email||'N/A'}}</td>
+                  <td><span class="text-nowrap">{{items?.countryCode + '-' + items?.phone||'N/A'}}</span></td>
+                  <td><span class="text-nowrap">{{items?.address||'N/A'}}</span></td>
                   <td>
-                    <div ngbDropdown class="d-inline-block">
-                      <button class="btn btn-outline-danger" id="dropdownBasic1" ngbDropdownToggle>
-                        Status
-                      </button>
-                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" container="body">
-                        <button class="dropdown-item" >Active</button>
-                        <button class="dropdown-item">Inactive</button>
-                      </div>
-                    </div>
+                    <mat-slide-toggle [checked]="items?.status == 1"  (click)="sliderRound(items?._id,items?.status)" color='primary'>{{(items?.status == 1)?'Active':'Inactive'}}</mat-slide-toggle>
+
                   </td>
-                  <td>0%</td>
+                  <td>{{items?.commission||'N/A'}}</td>
                   <td>
                     <div ngbDropdown placement="bottom" class="d-inline-block" placement="bottom" container="body">
                       <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
@@ -105,18 +103,18 @@
                       </button>
 
                       <div ngbDropdownMenu aria-labelledby="dropdownBasic1"    >
-                        <button class="dropdown-item" (click)="userprofileModal(userprofile)"><i class="ti-eye"></i>
+                        <button class="dropdown-item" (click)="userprofileModal(userprofile,items)"><i class="ti-eye"></i>
                           View
                         </button>
-                        <button class="dropdown-item" (click)="userDetailModal(userDetail)"><i _ngcontent-axh-c146=""
+                        <button class="dropdown-item" (click)="userDetailModal(userDetail,items?._id)"><i _ngcontent-axh-c146=""
                             class="ti-marker-alt"></i> Edit Commision</button>
-                        <!-- <button class="dropdown-item" (click)="userDeleteModal(userDelete)"><i class="ti-trash"></i>
-                          Delete</button> -->
+                        <button class="dropdown-item" (click)="userDeleteModal(userDelete,items?._id)"><i class="ti-trash"></i>
+                          Delete</button>
                       </div>
                     </div>
                   </td>
                 </tr>
-                <tr  *ngFor="let items of UserList | paginate : {itemsPerPage:itemPerPage, currentPage:currentPage, totalItems:totalItems}; let i=index">
+                <!-- <tr  *ngFor="let items of UserList | paginate : {itemsPerPage:itemPerPage, currentPage:currentPage, totalItems:totalItems}; let i=index">
                   <td>{{itemPerPage * (currentPage-1)+ i+1}}</td>
                   <td><span class="nowrap"> {{items?.firstName + ' ' + items?.lastName||'N/A'}}</span></td>
                   <td> {{items?.userName||'N/A'}}</td>
@@ -153,10 +151,10 @@
                       </div>
                     </div>
                   </td>
-                </tr>
+                </tr> -->
                
                 <tr *ngIf="totalItems==0">
-                  <td class="table-no-record" colspan="9">No Record Found</td>
+                  <td class="table-no-record" colspan="16">No Record Found</td>
               </tr>
               </tbody>
             </table>
@@ -202,8 +200,9 @@
           <div class="card">
             <div class="card-body">
               <div class="m-t-30 text-center">
-                <img src="assets/images/users/2.jpg" class="rounded-circle" width="120" />
-                <h4 class="card-title m-t-10">Ronny</h4>
+                
+                <img [src]="imgul + imgurl" class="rounded-circle" width="120" />
+                <h4 class="card-title m-t-10">{{particularUser?.firstName+' '+ particularUser?.lastName||'N/A'}}</h4>
                
               </div>
             </div>
@@ -222,28 +221,28 @@
                     <div class="row pt-2">
                       <div class="col-md-6">
                         <ul class="list-block">
-                          <li class="list-block-listing">Name: <span class="font-weight-600">Ronny</span></li>
-                          <li class="list-block-listing">Vendor Id: <span class="font-weight-600">Ron65565</span></li>
-                          <li class="list-block-listing">Email: <span class="font-weight-600">ronny@gmail.com</span>
+                          <li class="list-block-listing">Name: <span class="font-weight-600">{{particularUser?.firstName+' '+ particularUser?.lastName||'N/A'}}</span></li>
+                          <li class="list-block-listing">Vendor Id: <span class="font-weight-600">{{particularUser?.userName||'N/A'}}</span></li>
+                          <li class="list-block-listing">Email: <span class="font-weight-600">{{particularUser?.email||'N/A'}}</span>
                           </li>
-                          <li class="list-block-listing">Gender: <span class="font-weight-600">Female</span>
+                          <li class="list-block-listing">Gender: <span class="font-weight-600">{{particularUser?.gender||'N/A'}}</span>
                           </li>
-                          <li class="list-block-listing">Phone No: <span class="font-weight-600">+91-7858485474</span>
+                          <li class="list-block-listing">Phone No: <span class="font-weight-600">{{particularUser?.countryCode+'-'+ particularUser?.phone||'N/A'}}</span>
                           </li>
                          
 
 
                         </ul>
-                        <button class="btn btn-secondary" (click)="addUserModal(addUser)" (click)="modal.dismiss('Cross click')">Edit</button>
+                        <button class="btn btn-secondary" (click)="addUserModal(editUser)" (click)="modal.dismiss('Cross click')">Edit</button>
                       </div>
                       <div class="col-md-6">
                         <ul class="list-block">
-                          <li class="list-block-listing "> <span>Address: </span> <span class="font-weight-600">3750
-                            Grove Avenue, Clinton</span>
+                          <li class="list-block-listing "> <span>Address: </span> <span class="font-weight-600">
+                            {{particularUser?.address||'N/A'}}</span>
                         </li>
-                          <li class="list-block-listing">Account Type: <span class="font-weight-600">Main</span></li>
-                          <li class="list-block-listing">Business Type: <span>Bike </span></li>
-                          <li class="list-block-listing">Commision: <span>$50 </span></li>
+                          <li class="list-block-listing">Account Type: <span class="font-weight-600">{{particularUser?.accountType||'N/A'}}</span></li>
+                          <li class="list-block-listing">Business Type: <span>{{particularUser?.businessType||'N/A'}}</span></li>
+                          <li class="list-block-listing">Commision: <span>{{particularUser?.commission||'N/A'}}</span></li>
                           
                         </ul>
                       </div>
@@ -281,7 +280,7 @@
   <!-- delete modal -->
   <ng-template #userDelete let-modal>
     <div class="modal-body">
-      <p>Are You Sure want to delete this user?</p>
+      <p>Are you sure want to delete?</p>
       <div class="btn-group">
         <button type="button" class="btn btn-primary mr-2" aria-label="Close"
           (click)="deleteUser()">Yes</button>
@@ -295,14 +294,14 @@
   <ng-template #userDetail let-modal>
     <div class="modal-body">
       <div class="card">
-        <form action="#">
+        <form [formGroup]="EditCommissionForm">
           <div class="form-body">
             <div class="card-body">
               <div class="row p-t-20">
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="control-label">Edit Commision</label>
-                    <input type="text" id="firstName" class="form-control" value="$50" placeholder="">
+                    <input type="text" id="firstName" class="form-control" formControlName="commission" placeholder="Enter commission">
                   </div>
                 </div>
                 <!--/span-->
@@ -313,7 +312,7 @@
 
             <div class="form-actions">
               <div class="card-body">
-                <button type="submit" class="btn btn-success mr-3" (click)="modal.dismiss('Cross click')">
+                <button type="submit" class="btn btn-success mr-3" (click)="UpdateCommission()">
                   <i class="fa fa-check"></i> Update</button>
                 <button type="button" class="btn btn-dark" (click)="modal.dismiss('Cross click')">Cancel</button>
               </div>
@@ -325,20 +324,21 @@
     </div>
   </ng-template>
 
-  <!-- add user -->
-   <!-- add user -->
-   <ng-template #addUser let-modal>
+  <!-- add vendor -->
+  <ng-template #addUser let-modal>
     <div class="modal-body">
       <div class="card">
-        <form action="#">
+        <form [formGroup]="addUserForm">
           <div class="form-body">
             <div class="card-body">
               <div class="row p-t-20">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Vendor Name</label>
-                    <input type="text" id="firstName" class="form-control" placeholder="John doe">
-
+                    <input type="text" id="firstName" class="form-control" placeholder="Enter your name" formControlName="fullName">
+                   <span *ngIf="submitted && errorHandlingSignin('fullName','required')" class="error">
+                     Fullname is required
+                   </span>
                   </div>
                 </div>
                 <!--/span-->
@@ -346,8 +346,8 @@
                   <div class="form-group has-success">
                     <div class="form-group">
                       <label class="control-label">Upload Vendor Profile</label>
-                      <div class="custom-file"><input class="custom-file-input" id="inputGroupFile01" type="file"><label
-                          class="custom-file-label" for="inputGroupFile01">Choose file</label></div>
+                      <div class="custom-file"><input class="custom-file-input" (change)="handleInputChange($event,'addprofile')" id="inputGroupFile01" type="file"><label
+                          class="custom-file-label" for="inputGroupFile01">{{fileName}}</label></div>
                     </div>
                   </div>
                 </div>
@@ -358,8 +358,10 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Contact No</label>
-                    <input type="text" id="firstName" class="form-control" placeholder="John doe">
-
+                    <input type="tel" id="firstName" class="form-control" placeholder="Enter a valid phone number" formControlName="phone">
+                    <span *ngIf="submitted && errorHandlingSignin('phone','required')" class="error">
+                      Phone is required
+                    </span>
                   </div>
                 </div>
                 <!--/span-->
@@ -367,8 +369,13 @@
                   <div class="form-group has-danger">
                     <label class="control-label">Email</label>
                     <input type="email" id="email" class="form-control form-control-danger"
-                      placeholder="example@gmail.com">
-
+                    placeholder="Enter a valid mail id" formControlName="email">
+                    <span *ngIf="submitted && errorHandlingSignin('email','required')" class="error">
+                      Email is required
+                    </span>
+                    <span *ngIf="submitted && errorHandlingSignin('email','email')" class="error">
+                      Email is Invaid
+                    </span>
                   </div>
                 </div>
                 <!--/span-->
@@ -378,17 +385,19 @@
                 <div class="col-md-6">
                   <div class="form-group has-danger">
                     <label class="control-label">Address</label>
-                    <input type="text" id="Address" class="form-control form-control-danger" placeholder="Address">
-
+                    <input type="text" id="Address" class="form-control form-control-danger" placeholder="Enter a valid address" formControlName="address">
+                    <span *ngIf="submitted && errorHandlingSignin('address','required')" class="error">
+                      Address is required
+                    </span>
                   </div>
                 </div>
                 <!--/span-->
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Vendor Id </label>
-                    <input type="text" id="bike_name" name="bike_name" class="form-control" placeholder="Ron#23456">
+                    <input type="text" id="bike_name" name="bike_name" class="form-control" readonly formControlName="userName">
                   </div>
-                </div>
+                </div> -->
                 <!--/span-->
 
               </div>
@@ -406,9 +415,9 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Gender</label>
-                    <select class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1">
-                      <option value="Category 1">Male</option>
-                      <option value="Category 2">Female</option>
+                    <select class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1" formControlName="gender">
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
                     </select>
                   </div>
                 </div>
@@ -416,25 +425,28 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Account Type</label>
-                    <select class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1">
-                      <option value="Category 1">Main</option>
-                      <option value="Category 2">Sub Profile</option>
+                    <select class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1" formControlName="accountType">
+                      <option value="Main">Main</option>
+                      <option value="SubAccount">Sub Profile</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="control-label">Edit Commision</label>
-                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="$50">
+                    <label class="control-label">Set Commision</label>
+                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Enter commission" formControlName="commission">
+                    <span *ngIf="submitted && errorHandlingSignin('commission','required')" class="error">
+                      Set Commision is required
+                    </span>
                   </div>
                 </div>
                 <!--/span-->
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Business Type</label>
-                    <select class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1">
-                      <option value="Category 1">Bike</option>
-                      <option value="Category 2">Event</option>
+                    <select class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1" formControlName="businessType">
+                      <option value="bike">Bike</option>
+                      <option value="event">Event</option>
                     </select>
                   </div>
                 </div>
@@ -448,67 +460,88 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">IBAN No</label>
-                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="IBAN No">
+                    <input type="text" id="Commision"  class="form-control" placeholder="Enter a valid IBAN No" formControlName="ibn">
+                    <span *ngIf="submitted && errorHandlingSignin('ibn','required')" class="error">
+                      IBAN no. is required
+                    </span>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Bank Name</label>
-                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Bank Name">
+                    <input type="text" id="Commision"  class="form-control" placeholder="Enter bank Name" formControlName="bankName">
+                    <span *ngIf="submitted && errorHandlingSignin('bankName','required')" class="error">
+                      Bank name is required
+                    </span>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group has-success">
                     <div class="form-group">
                       <label class="control-label">Commercial registration attachment </label>
-                      <div class="custom-file"><input class="custom-file-input" id="inputGroupFile01" type="file"><label
-                          class="custom-file-label" for="inputGroupFile01">Choose file</label></div>
+                      <div class="custom-file"><input class="custom-file-input" id="inputGroupFile01"(change)="handleInputChange($event,'addcomRegfile')" type="file"><label
+                          class="custom-file-label" for="inputGroupFile01">{{comfile}}</label></div>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Commercial registration ID </label>
-                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Commercial registration ID ">
+                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Enter commercial registration ID " formControlName="commerialId">
+                    <span *ngIf="submitted && errorHandlingSignin('commerialId','required')" class="error">
+                      Registration ID is required
+                    </span>
                   </div>
                 </div>
                  <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Tax ID </label>
-                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Tax ID ">
+                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Enter tax id" formControlName="taxId">
+                    <span *ngIf="submitted && errorHandlingSignin('taxId','required')" class="error">
+                      Tax ID is required
+                    </span>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Tax Attachment </label>
-                    <div class="custom-file"><input class="custom-file-input" id="inputGroupFile01" type="file"><label
-                      class="custom-file-label" for="inputGroupFile01">Choose file</label></div>
+                    <div class="custom-file"><input class="custom-file-input"(change)="handleInputChange($event,'addtaxfile')" id="inputGroupFile01" type="file"><label
+                      class="custom-file-label" for="inputGroupFile01">{{taxfile}}</label></div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Tourism ID </label>
-                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Tourism ID ">
+                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Enter tourism ID" formControlName="touristId">
+                    <span *ngIf="submitted && errorHandlingSignin('touristId','required')" class="error">
+                      Tourism ID is required
+                    </span>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Tourism ID attachment  </label>
-                    <div class="custom-file"><input class="custom-file-input" id="inputGroupFile01" type="file"><label
-                      class="custom-file-label" for="inputGroupFile01">Choose file</label></div>
+                    <div class="custom-file"><input class="custom-file-input" id="inputGroupFile01" (change)="handleInputChange($event,'addtourfile')" type="file"><label
+                      class="custom-file-label" for="inputGroupFile01">{{tourfile}}</label></div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Reset Password </label>
-                    <input type="password" id="Commision" name="Commision" class="form-control" placeholder="Reset ">
+                    <input type="password" id="Commision" name="Commision" class="form-control" placeholder="Enter new password" formControlName="newPassword">
+                    <span *ngIf="submitted && errorHandlingSignin('newPassword','required')" class="error">
+                      Reset Password is required
+                    </span>
                   </div>
                 </div>
 
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="control-label">Re-enter Password </label>
-                    <input type="password" id="Commision" name="Commision" class="form-control" placeholder="Reset ">
+                    <input type="password" id="Commision" name="Commision" class="form-control"  placeholder="Enter confirm password" formControlName="cnfPassword">
+                    <span *ngIf="submitted && errorHandlingSignin('cnfPassword','required')" class="error">
+                      Re-enter Password is required
+                    </span>
                   </div>
                 </div>
 
@@ -517,8 +550,245 @@
 
             <div class="form-actions">
               <div class="card-body">
-                <button type="submit" class="btn btn-success mr-3" (click)="modal.dismiss('Cross click')">
-                  <i class="fa fa-check"></i> Add</button>
+                <button type="submit" class="btn btn-success mr-3" (click)="AddUser()">
+                  <i class="fa fa-check"></i>Add</button>
+                <button type="button" class="btn btn-dark" (click)="modal.dismiss('Cross click')">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </ng-template>
+   <!-- edit vendor -->
+   <ng-template #editUser let-modal>
+    <div class="modal-body">
+      <div class="card">
+        <form [formGroup]="EditUserForm">
+          <div class="form-body">
+            <div class="card-body">
+              <div class="row p-t-20">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Vendor Name</label>
+                    <input type="text" id="firstName" class="form-control" placeholder="Enter your name" formControlName="fullName">
+                   <span *ngIf="submitted && errorHandlingEdit('fullName','required')" class="error">
+                     Fullname is required
+                   </span>
+                  </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                  <div class="form-group has-success">
+                    <div class="form-group">
+                      <label class="control-label">Upload Vendor Profile</label>
+                      <div class="custom-file"><input class="custom-file-input" (change)="handleInputChange($event,'addprofile')" id="inputGroupFile01" type="file"><label
+                          class="custom-file-label" for="inputGroupFile01">{{fileName}}</label></div>
+                    </div>
+                  </div>
+                </div>
+                <!--/span-->
+              </div>
+              <!--/row-->
+              <div class="row ">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Contact No</label>
+                    <input type="tel" id="firstName" class="form-control" placeholder="Enter a valid phone number" formControlName="phone">
+                    <span *ngIf="submitted && errorHandlingEdit('phone','required')" class="error">
+                      Phone is required
+                    </span>
+                  </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                  <div class="form-group has-danger">
+                    <label class="control-label">Email</label>
+                    <input type="email" id="email" class="form-control form-control-danger"
+                    placeholder="Enter a valid mail id" formControlName="email">
+                    <span *ngIf="submitted && errorHandlingEdit('email','required')" class="error">
+                      Email is required
+                    </span>
+                    <span *ngIf="submitted && errorHandlingEdit('email','email')" class="error">
+                      Email is Invaid
+                    </span>
+                  </div>
+                </div>
+                <!--/span-->
+              </div>
+              <!--/row-->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group has-danger">
+                    <label class="control-label">Address</label>
+                    <input type="text" id="Address" class="form-control form-control-danger" placeholder="Enter a valid address" formControlName="address">
+                    <span *ngIf="submitted && errorHandlingEdit('address','required')" class="error">
+                      Address is required
+                    </span>
+                  </div>
+                </div>
+                <!--/span-->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Vendor Id </label>
+                    <input type="text" id="bike_name" name="bike_name" class="form-control" readonly formControlName="userName">
+                  </div>
+                </div> -->
+                <!--/span-->
+
+              </div>
+              <!--/row-->
+              <div class="row">
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Vendor Id </label>
+                    <input type="text" id="bike_name" name="bike_name" class="form-control" placeholder="Ron#23456">
+                  </div>
+                </div> -->
+                <!--/span-->
+
+                <!--/span-->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Gender</label>
+                    <select class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1" formControlName="gender">
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                  </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Account Type</label>
+                    <select class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1" formControlName="accountType">
+                      <option value="Main">Main</option>
+                      <option value="SubAccount">Sub Profile</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Set Commision</label>
+                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Enter commission" formControlName="commission">
+                    <span *ngIf="submitted && errorHandlingEdit('commission','required')" class="error">
+                      Set Commision is required
+                    </span>
+                  </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Business Type</label>
+                    <select class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1" formControlName="businessType">
+                      <option value="bike">Bike</option>
+                      <option value="event">Event</option>
+                    </select>
+                  </div>
+                </div>
+                <!--/span-->
+              </div>
+              <!--/row-->
+              <div class="row">
+                <div class="col-md-12">
+                  <h3>Vendor Document</h3>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">IBAN No</label>
+                    <input type="text" id="Commision"  class="form-control" placeholder="Enter a valid IBAN No" formControlName="ibn">
+                    <span *ngIf="submitted && errorHandlingEdit('ibn','required')" class="error">
+                      IBAN no. is required
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Bank Name</label>
+                    <input type="text" id="Commision"  class="form-control" placeholder="Enter bank Name" formControlName="bankName">
+                    <span *ngIf="submitted && errorHandlingEdit('bankName','required')" class="error">
+                      Bank Name is required
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group has-success">
+                    <div class="form-group">
+                      <label class="control-label">Commercial registration attachment </label>
+                      <div class="custom-file"><input class="custom-file-input" id="inputGroupFile01"(change)="handleInputChange($event,'addcomRegfile')" type="file"><label
+                          class="custom-file-label" for="inputGroupFile01">{{comfile}}</label></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Commercial registration ID </label>
+                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Enter commercial registration ID " formControlName="commerialId">
+                    <span *ngIf="submitted && errorHandlingEdit('commerialId','required')" class="error">
+                      Registration ID is required
+                    </span>
+                  </div>
+                </div>
+                 <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Tax ID </label>
+                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Enter tax id" formControlName="taxId">
+                    <span *ngIf="submitted && errorHandlingEdit('taxId','required')" class="error">
+                      Tax ID is required
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Tax Attachment </label>
+                    <div class="custom-file"><input class="custom-file-input"(change)="handleInputChange($event,'addtaxfile')" id="inputGroupFile01" type="file"><label
+                      class="custom-file-label" for="inputGroupFile01">{{taxfile}}</label></div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Tourism ID </label>
+                    <input type="text" id="Commision" name="Commision" class="form-control" placeholder="Enter tourism ID" formControlName="touristId">
+                    <span *ngIf="submitted && errorHandlingEdit('touristId','required')" class="error">
+                      Tourism ID is required
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Tourism ID attachment  </label>
+                    <div class="custom-file"><input class="custom-file-input" id="inputGroupFile01" (change)="handleInputChange($event,'addtourfile')" type="file"><label
+                      class="custom-file-label" for="inputGroupFile01">{{tourfile}}</label></div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Reset Password </label>
+                    <input type="password" id="Commision" name="Commision" class="form-control" placeholder="Enter new password" formControlName="newPassword">
+                    <span *ngIf="submitted && errorHandlingEdit('newPassword','required')" class="error">
+                      Reset Password is required
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">Re-enter Password </label>
+                    <input type="password" id="Commision" name="Commision" class="form-control"  placeholder="Enter confirm password" formControlName="cnfPassword">
+                    <span *ngIf="submitted && errorHandlingEdit('cnfPassword','required')" class="error">
+                      Re-enter Password is required
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <div class="card-body">
+                <button type="submit" class="btn btn-success mr-3" (click)="AddUser()">
+                  <i class="fa fa-check"></i>Add</button>
                 <button type="button" class="btn btn-dark" (click)="modal.dismiss('Cross click')">Cancel</button>
               </div>
             </div>

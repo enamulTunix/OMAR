@@ -119,7 +119,7 @@ export const PagesRoutes: Routes = [
         }
       },
       {
-        path: 'vendorsdetail',
+        path: 'vendorsdetail/:id',
         component: VendordetailComponent,
         data: {
           title: 'Vendor Detail',
@@ -141,7 +141,7 @@ export const PagesRoutes: Routes = [
         }
       },
       {
-        path: 'subaccount',
+        path: 'subaccount/:id',
         component: SubaccountComponent,
         data: {
           title: 'Sub Account Detail',

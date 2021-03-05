@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -22,16 +22,23 @@ export class UsersComponent implements OnInit {
   searchForm:FormGroup;
   addUserForm:FormGroup;
   EditUserForm:FormGroup
+  resetForm:FormGroup;
   UserList:any;
   totalItems:any;
   currentPage:number = 1;
-  imgurl:any;
+  imgurl='';
   itemPerPage:number = 10;
   status: any;
   fileName: string='Choose File';
-  constructor(private spinner: NgxSpinnerService,private router:Router,private activated:ActivatedRoute, private modalService: NgbModal,public service:PagesService,private toaster: ToastrService) {}
+  constructor(private fb:FormBuilder, private spinner: NgxSpinnerService,private router:Router,private activated:ActivatedRoute, private modalService: NgbModal,public service:PagesService,private toaster: ToastrService) {}
 
   ngOnInit(): void {
+    this.resetForm = this.fb.group({
+      
+      newpassword:['',[Validators.required,Validators.pattern(/^(?=^.{8,16}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-])(?!.*\s).*$/)]],
+      cnfpassword:['',[Validators.required]],
+      
+    })
     this.getCountry()
     this.searchForm = new FormGroup({
       search: new FormControl('')
@@ -105,7 +112,8 @@ this.EditUserForm.patchValue({
 addUserModal(addUser) {
   this.modalService.open(addUser, {backdropClass: 'light-blue-backdrop',centered: true,size: 'lg'});
 }
-passwordModal(password) {
+passwordModal(password,id) {
+  this.delId = id;
   this.modalService.open(password, {backdropClass: 'light-blue-backdrop',centered: true,size: 'sm'});
 }
 
@@ -148,6 +156,14 @@ searchFormSubmit() {
   if (this.searchForm.value.search) {
     this.getUserDetails()
   }
+}
+reset() {
+  if (this.searchForm.value.search) {
+    this.searchForm.reset();
+    this.getUserDetails()
+  }
+  
+   
 }
 Activate(){
   this.status = 1;
@@ -288,4 +304,59 @@ deleteUser(){
     this.modalService.dismissAll()
   })
 }
+sliderRound(id,status){
+  if (status==1){
+    this.status='0'
+  }else if(status==0){
+    this.status = 1
+  }
+  let url = `/editUser`
+  let obj = {
+    id:id,
+    status:this.status
+  }
+  this.spinner.show()
+  this.service.putApi(url,obj).subscribe((res:any)=>{
+    console.log('Slider Response',res)
+  
+    this.spinner.hide()
+    if (res['success']) {
+      this.status = ''
+      this.getUserDetails()
+    } else {
+      this.toaster.error(res['message'])
+    }
+  }, error => {
+    this.toaster.error(error['message'])
+    this.spinner.hide()
+  })
+}
+changePassword(){
+    let url = `/resetPassword`
+    const obj = {
+      id:this.delId,
+      password:this.resetForm.value.newpassword,
+      confirmPassword:this.resetForm.value.cnfpassword,
+      }
+    this.spinner.show()
+    this.service.postApi(url,obj).subscribe((res:any)=>{
+      console.log('Del Res',res)
+     this.spinner.hide()
+      if (res.message=='Updated successfully') {
+        this.toaster.success(res['message'])
+        this.status = ''
+        this.getUserDetails()
+        this.modalService.dismissAll()
+        
+      } else {
+        
+        this.toaster.error(res['message'])
+        this.modalService.dismissAll()
+      }
+    }, error => {
+      this.toaster.error(error['message'])
+      this.spinner.hide()
+      this.modalService.dismissAll()
+    })
+  }
 }

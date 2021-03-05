@@ -13,7 +13,10 @@
 
                         </form>
                     </div>
-                    <div class="col-md-8  d-flex justify-content-end">
+                    <button class="btn btn-circle btn-warning btn-sm " (click)="reset()" title="Refresh">
+                       <i class="fas fa-undo"></i>
+                      </button>
+                    <div class="col d-flex justify-content-end">
                         <div ngbDropdown class="d-inline-block mb-2 mr-2">
                             <button class="btn btn-info text-white" id="dropdownBasic1" ngbDropdownToggle>
                                 Status
@@ -64,10 +67,11 @@
                                     </td>
                                     <!-- [routerLink]="['/view-product-management',items?._id]" -->
                                     <td><a  (click)="orderhistory(items?._id)" class="btn btn-info">View</a></td>
-                                    <td><button class="btn btn-light" (click)="passwordModal(password)">Reset</button>
+                                    <td><button class="btn btn-light" (click)="passwordModal(password,items?._id)">Reset</button>
                                     </td>
                                     <td>
-                                    <i class="fa fa-circle" aria-hidden="true" [ngClass]="[ (items?.status==1)? 'text-success' : 'text-danger']" [title]="(items?.status==1)?'Active':'Inactive'"></i>
+                                        <mat-slide-toggle [checked]="items?.status == 1" (click)="sliderRound(items?._id,items?.status)" color='primary'>{{(items?.status == 1)?'Active':'Inactive'}}</mat-slide-toggle>
+                                    <!-- <i class="fa fa-circle" aria-hidden="true" [ngClass]="[ (items?.status==1)? 'text-success' : 'text-danger']" [title]="(items?.status==1)?'Active':'Inactive'"></i> -->
                                     </td>
                                     <td>
                                         <div ngbDropdown placement="bottom" class="d-inline-block">
@@ -138,7 +142,7 @@
                         <div class="card-body">
                             <div class="m-t-30 text-center">
                                 <!-- [src]="imgurl?imgurl:'https://www.w3schools.com/howto/img_avatar.png'" -->
-                                <img [src]="imgurl?imgurl:'assets/images/users/5.jpg'" class="rounded-circle" width="120" />
+                                <img [src]="imgurl?imgurl:'https://www.w3schools.com/howto/img_avatar.png'" class="rounded-circle" width="120" />
                                 <h4 class="card-title m-t-10">{{particularUser?.firstName+' '+ particularUser?.lastName||'N/A'}}</h4>
 
                             </div>
@@ -234,15 +238,31 @@
             <button type="button" class=" close-icon" aria-label="Close" (click)="modal.dismiss('Cross click')">
                 <i class="mdi mdi-close"></i></button>
             <h4>Reset Password</h4>
-            <div class="form-group">
-                <label for="">Password</label>
-                <input type="password" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="">Re-Enter Password</label>
-                <input type="password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-primary" (click)="modal.dismiss('Cross click')">Submit</button>
+            <form [formGroup]="resetForm">
+                <div class="form-group">
+                    <label for="">Password</label>
+                    <input type="password" class="form-control" formControlName="newpassword">
+                    <div class="text-danger">
+                        <span
+                            *ngIf="resetForm.get('newpassword').hasError('required') && (resetForm.get('newpassword').dirty || resetForm.get('newpassword').touched)">
+                            *Please enter new password.
+                            </span>
+                            <span *ngIf="resetForm.get('newpassword').hasError('pattern')">
+                                *Password should have minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, 1
+                                number and 1 special character.</span>
+                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="">Re-Enter Password</label>
+                    <input type="password" class="form-control" formControlName="cnfpassword">
+                    <div *ngIf="resetForm.get('cnfpassword').dirty" class="text-danger">
+                        <span *ngIf="resetForm.get('cnfpassword').value != resetForm.get('newpassword').value">*Password
+                          mismatched.</span>
+                      </div>
+                </div>
+                <button type="submit" class="btn btn-primary" (click)="changePassword()">Change</button>
+            </form>
+          
         </div>
     </ng-template>
     <!-- edit user detail -->

@@ -44,12 +44,17 @@ import { EvebtdetailComponent } from './evebtdetail/evebtdetail.component';
 import { BikedetailComponent } from './bikedetail/bikedetail.component';
 import { RewardhistoryComponent } from './rewardhistory/rewardhistory.component'
 import {MatSelectModule} from '@angular/material/select';
+import {MatIconModule} from '@angular/material/icon';
+
 import { NotificationhistoryComponent } from './notificationhistory/notificationhistory.component';
 import { VendorbikedetailComponent } from './vendorbikedetail/vendorbikedetail.component';
 import { VendoreventComponent } from './vendorevent/vendorevent.component';
 import { VendoreventdetailComponent } from './vendoreventdetail/vendoreventdetail.component';
 // import { UsersDetailComponent } from './users-detail/users-detail.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
 import { SubaccountComponent } from './subaccount/subaccount.component';
 @NgModule({
   imports: [
@@ -62,11 +67,14 @@ import { SubaccountComponent } from './subaccount/subaccount.component';
     QuillModule.forRoot(),
     ChartsModule,
     ChartistModule,
+    MatSlideToggleModule,
     NgxChartsModule,
     NgxDatatableModule,
     GooglePlaceModule,
     TranslateModule,
     MatSliderModule,
+    MatButtonModule,
+    MatIconModule,
     MatSelectModule,
     MatDatepickerModule
 
